@@ -1,913 +1,917 @@
-//++++++++++++++++++++++++++++++++++++
-// SHADERS FROM RED DEAD REDEMPTION II / DO NOT SHARE OR REDISTRIBUATE
-// Original code by Rockstar Games
-// Code adapt by CX and BLASE
-//++++++++++++++++++++++++++++++++++++
-vs_5_0
-dcl_globalFlags refactoringAllowed
-dcl_constantbuffer cb2[14], immediateIndexed
-dcl_constantbuffer cb5[87], immediateIndexed
-dcl_constantbuffer cb1[16], immediateIndexed
-dcl_constantbuffer cb3[55], immediateIndexed
-dcl_sampler s1, mode_default
-dcl_resource_texture2d (float,float,float,float) t1
-dcl_input v0.xy
-dcl_output_siv o0.xyzw, position
-dcl_output o1.xyzw
-dcl_output o2.x
-dcl_output o4.xyzw
-dcl_output o5.xyzw
-dcl_output o6.xyzw
-dcl_output o7.xyzw
-dcl_output o8.xyzw
-dcl_output o9.xyzw
-dcl_output o10.xyzw
-dcl_output o11.xyzw
-dcl_output o12.xyzw
-dcl_output o13.xyzw
-dcl_output o14.xyzw
-dcl_output o15.xyzw
-dcl_temps 18
-mul r0.xy, v0.xyxx, cb5[84].xyxx
-mad o0.xy, r0.xyxx, cb5[82].xyxx, cb5[82].zwzz
-mad o1.xy, v0.xyxx, cb5[83].xyxx, cb5[83].zwzz
-sample_l_indexable(texture2d)(float,float,float,float) r0.xy, l(0.000000e+000, 0.000000e+000, 0.000000e+000, 0.000000e+000), t1.xyzw, s1, l(0.000000e+000)
-div o1.w, l(1.000000e+000, 1.000000e+000, 1.000000e+000, 1.000000e+000), r0.x
-mul r1.xyz, cb1[10].wyzw, cb1[11].zwyz
-mul r2.xyz, cb1[10].zwxz, cb1[11].wxzw
-mul r3.xyz, cb1[10].wxyw, cb1[11].ywxy
-mul r4.xyz, cb1[10].yzxy, cb1[11].zxyz
-mad r1.xyz, cb1[10].zwyz, cb1[11].wyzw, -r1.xyzx
-mad r2.xyz, cb1[10].wxzw, cb1[11].zwxz, -r2.xyzx
-mad r3.xyz, cb1[10].ywxy, cb1[11].wxyw, -r3.xyzx
-mad r4.xyz, cb1[10].zxyz, cb1[11].yzxy, -r4.xyzx
-dp3 r1.x, r1.xyzx, cb1[9].yzwy
-dp3 r1.y, r2.xyzx, cb1[9].xzwx
-dp3 r1.z, r3.xyzx, cb1[9].xywx
-dp3 r1.w, r4.xyzx, cb1[9].xyzx
-dp4 r0.z, r1.xyzw, cb1[8].xyzw
-ne r0.w, r0.z, l(0.000000e+000)
-if_nz r0.w
-  rcp r1.x, r0.z
-  mul r1.yz, cb1[10].wwww, cb1[11].zzyz
-  mad r1.yzw, cb1[10].zzyz, cb1[11].wwww, -r1.yyzy
-  mul r1.z, r1.z, cb1[9].z
-  mad r1.y, cb1[9].y, r1.y, -r1.z
-  mul r2.xy, cb1[10].zwzz, cb1[11].yxyy
-  mad r2.xy, cb1[10].yxyy, cb1[11].zwzz, -r2.xyxx
-  mul r1.z, r2.y, cb1[9].z
-  mad r1.y, cb1[9].w, r2.x, r1.y
-  mul o4.x, r1.y, r1.x
-  mad r1.y, cb1[9].x, r1.w, -r1.z
-  mul r1.z, cb1[10].z, cb1[11].x
-  mad r1.z, cb1[10].x, cb1[11].z, -r1.z
-  mad r1.y, cb1[9].w, r1.z, r1.y
-  mul o5.x, r1.y, -r1.x
-else 
-  mov o4.x, l(0)
-  mov o5.x, l(0)
-endif 
-mov o7.x, -cb1[4].z
-if_nz r0.w
-  rcp r1.x, r0.z
-  mul r1.yz, cb1[10].wwww, cb1[11].zzyz
-  mad r1.yzw, cb1[10].zzyz, cb1[11].wwww, -r1.yyzy
-  mul r1.z, r1.z, cb1[8].z
-  mad r1.y, cb1[8].y, r1.y, -r1.z
-  mul r2.xy, cb1[10].zwzz, cb1[11].yxyy
-  mad r2.xy, cb1[10].yxyy, cb1[11].zwzz, -r2.xyxx
-  mul r1.z, r2.y, cb1[8].z
-  mad r1.y, cb1[8].w, r2.x, r1.y
-  mul o4.y, r1.y, -r1.x
-  mad r1.y, cb1[8].x, r1.w, -r1.z
-  mul r1.z, cb1[10].z, cb1[11].x
-  mad r1.z, cb1[10].x, cb1[11].z, -r1.z
-  mad r1.y, cb1[8].w, r1.z, r1.y
-  mul o5.y, r1.y, r1.x
-else 
-  mov o4.y, l(0)
-  mov o5.y, l(0)
-endif 
-mov o7.y, -cb1[5].z
-if_nz r0.w
-  rcp r1.x, r0.z
-  mul r1.yz, cb1[9].wwww, cb1[11].zzyz
-  mad r1.yzw, cb1[9].zzyz, cb1[11].wwww, -r1.yyzy
-  mul r1.z, r1.z, cb1[8].z
-  mad r1.y, cb1[8].y, r1.y, -r1.z
-  mul r2.xy, cb1[9].zwzz, cb1[11].yxyy
-  mad r2.xy, cb1[9].yxyy, cb1[11].zwzz, -r2.xyxx
-  mul r1.z, r2.y, cb1[8].z
-  mad r1.y, cb1[8].w, r2.x, r1.y
-  mul o4.z, r1.y, r1.x
-  mad r1.y, cb1[8].x, r1.w, -r1.z
-  mul r1.z, cb1[9].z, cb1[11].x
-  mad r1.z, cb1[9].x, cb1[11].z, -r1.z
-  mad r1.y, cb1[8].w, r1.z, r1.y
-  mul o5.z, r1.y, -r1.x
-else 
-  mov o4.z, l(0)
-  mov o5.z, l(0)
-endif 
-mov o7.z, -cb1[6].z
-if_nz r0.w
-  rcp r0.z, r0.z
-  mul r1.xy, cb1[9].wwww, cb1[10].zyzz
-  mad r1.xyzw, cb1[9].zyzy, cb1[10].wwww, -r1.xyxy
-  mul r0.w, r1.y, cb1[8].z
-  mad r0.w, cb1[8].y, r1.x, -r0.w
-  mul r1.xy, cb1[9].zwzz, cb1[10].yxyy
-  mad r2.xyzw, cb1[9].yxxy, cb1[10].zwwz, -r1.xyyx
-  mul r1.xy, r2.yzyy, cb1[8].zyzz
-  mad r0.w, cb1[8].w, r2.x, r0.w
-  mul o4.w, r0.w, -r0.z
-  mad r1.xy, cb1[8].xxxx, r1.zwzz, -r1.xyxx
-  mul r1.zw, cb1[9].zzzy, cb1[10].xxxx
-  mad r3.xyzw, cb1[9].xxxx, cb1[10].zyzy, -r1.zwzw
-  mul r0.w, r3.z, cb1[8].y
-  mad r1.xy, cb1[8].wwww, r3.xyxx, r1.xyxx
-  mul o5.w, r0.z, r1.x
-  mul r1.x, -r0.z, r1.y
-  mad r0.w, cb1[8].x, r2.w, -r0.w
-  mad r0.w, cb1[8].z, r3.w, r0.w
-  mul o7.w, r0.w, r0.z
-else 
-  mov o4.w, l(0)
-  mov o5.w, l(0)
-  mov r1.x, l(0)
-  mov o7.w, l(0)
-endif 
-mad r0.z, cb3[53].z, l(5.895892e-001), l(5.000000e-001)
-lt r0.w, l(0.000000e+000), cb3[53].x
-lt r1.z, cb3[53].x, l(0.000000e+000)
-iadd r0.w, -r0.w, r1.z
-itof r0.w, r0.w
-mul r1.z, r0.w, r0.z
-mul_sat r1.w, r1.z, l(5.869544e+001)
-mad r2.x, r1.w, l(-2.000000e+000), l(3.000000e+000)
-mul r1.w, r1.w, r1.w
-mul r2.y, r1.w, r2.x
-mad r3.xyzw, r0.zzzz, r0.wwww, l(-1.703710e-002, -6.698730e-002, -1.464466e-001, -2.500000e-001)
-mul_sat r3.xyzw, r3.xyzw, l(2.001994e+001, 1.258506e+001, 9.656854e+000, 8.292521e+000)
-mad r4.xyzw, r3.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r3.xyzw, r3.xyzw, r3.xyzw
-mul r3.xyzw, r3.xyzw, r4.xyzw
-mad r4.xyzw, r0.zzzz, r0.wwww, l(-3.705906e-001, -5.000000e-001, -6.112606e-001, -7.169419e-001)
-mul_sat r4.xyzw, r4.xyzw, l(7.727414e+000, 8.987908e+000, 9.462412e+000, 1.054820e+001)
-mad r5.xyzw, r4.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r4.xyzw, r4.xyzw, r4.xyzw
-mul r4.xyzw, r4.xyzw, r5.xyzw
-mad r5.xyzw, r0.zzzz, r0.wwww, l(-8.117448e-001, -8.909158e-001, -9.504845e-001, 1.000000e+000)
-mul_sat r5.xyzw, r5.xyzw, l(1.263089e+001, 1.678734e+001, 2.704201e+001, 7.976957e+001)
-mad r6.xyzw, r5.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r5.xyzw, r5.xyzw, r5.xyzw
-add r2.z, |r1.z|, l(-9.874640e-001)
-mul_sat r2.z, r2.z, l(7.977033e+001)
-mad r2.w, r2.z, l(-2.000000e+000), l(3.000000e+000)
-mul r2.z, r2.z, r2.z
-mul r2.z, r2.z, r2.w
-mul r5.xyz, r5.xyzx, r6.xyzx
-mad r7.xyzw, r0.zzzz, r0.wwww, l(9.874639e-001, 9.504844e-001, 8.909157e-001, 8.117448e-001)
-mul_sat r7.xyzw, r7.xyzw, l(2.704201e+001, 1.678734e+001, 1.263091e+001, 1.054818e+001)
-mad r8.xyzw, r7.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r7.xyzw, r7.xyzw, r7.xyzw
-mul r7.xyzw, r7.xyzw, r8.xyzw
-mad r8.xyzw, r0.zzzz, r0.wwww, l(7.169417e-001, 6.112604e-001, 5.000000e-001, 3.086582e-001)
-mul_sat r8.xyzw, r8.xyzw, l(9.462412e+000, 8.987923e+000, 5.226250e+000, 6.164787e+000)
-mad r9.xyzw, r8.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r8.xyzw, r8.xyzw, r8.xyzw
-mul r8.xyzw, r8.xyzw, r9.xyzw
-mad r0.zw, r0.zzzz, r0.wwww, l(0.000000e+000, 0.000000e+000, 1.464466e-001, 3.806020e-002)
-mul_sat r0.zw, r0.zzzw, l(0.000000e+000, 0.000000e+000, 9.226250e+000, 2.627417e+001)
-mad r6.xy, r0.zwzz, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
-mul r0.zw, r0.zzzw, r0.zzzw
-mul r0.zw, r0.zzzw, r6.xxxy
-lt r1.z, l(0.000000e+000), r1.z
-mad r1.w, -r2.x, r1.w, l(2.000000e+000)
-mad r1.w, r3.x, r1.w, r2.y
-add r2.x, -r1.w, l(3.000000e+000)
-mad r1.w, r3.y, r2.x, r1.w
-add r2.x, -r1.w, l(4.000000e+000)
-mad r1.w, r3.z, r2.x, r1.w
-add r2.x, -r1.w, l(5.000000e+000)
-mad r1.w, r3.w, r2.x, r1.w
-add r2.x, -r1.w, l(6.000000e+000)
-mad r1.w, r4.x, r2.x, r1.w
-add r2.x, -r1.w, l(7.000000e+000)
-mad r1.w, r4.y, r2.x, r1.w
-add r2.x, -r1.w, l(8.000000e+000)
-mad r1.w, r4.z, r2.x, r1.w
-add r2.x, -r1.w, l(9.000000e+000)
-mad r1.w, r4.w, r2.x, r1.w
-add r2.x, -r1.w, l(1.000000e+001)
-mad r1.w, r5.x, r2.x, r1.w
-add r2.x, -r1.w, l(1.100000e+001)
-mad r1.w, r5.y, r2.x, r1.w
-add r2.x, -r1.w, l(1.200000e+001)
-mad r1.w, r5.z, r2.x, r1.w
-add r2.x, -r1.w, l(1.300000e+001)
-mad r1.w, r2.z, r2.x, r1.w
-mad r2.x, r6.w, r5.w, l(1.300000e+001)
-add r2.y, -r2.x, l(1.500000e+001)
-mad r2.x, r7.x, r2.y, r2.x
-add r2.y, -r2.x, l(1.600000e+001)
-mad r2.x, r7.y, r2.y, r2.x
-add r2.y, -r2.x, l(1.700000e+001)
-mad r2.x, r7.z, r2.y, r2.x
-add r2.y, -r2.x, l(1.800000e+001)
-mad r2.x, r7.w, r2.y, r2.x
-add r2.y, -r2.x, l(1.900000e+001)
-mad r2.x, r8.x, r2.y, r2.x
-add r2.y, -r2.x, l(2.000000e+001)
-mad r2.x, r8.y, r2.y, r2.x
-add r2.y, -r2.x, l(2.100000e+001)
-mad r2.x, r8.z, r2.y, r2.x
-add r2.y, -r2.x, l(2.200000e+001)
-mad r2.x, r8.w, r2.y, r2.x
-add r2.y, -r2.x, l(2.300000e+001)
-mad r0.z, r0.z, r2.y, r2.x
-add r2.x, -r0.z, l(2.400000e+001)
-mad r0.z, r0.w, r2.x, r0.z
-lt r0.w, l(2.400000e+001), r0.z
-movc r0.z, r0.w, l(0), r0.z
-movc r0.z, r1.z, r1.w, r0.z
-add r2.xyzw, r0.zzzz, l(-6.000000e+000, -4.600000e+000, -5.100000e+000, -1.200000e+001)
-mul_sat r3.xyzw, r2.yzxw, l(1.666667e+000, 1.111111e+000, 1.666667e-001, 1.666667e-001)
-mad r4.xyzw, r3.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r3.xyzw, r3.xyzw, r3.xyzw
-mov_sat r2.x, r2.x
-mad r0.w, r2.x, l(-2.000000e+000), l(3.000000e+000)
-mul r1.z, r2.x, r2.x
-mul r0.w, r0.w, r1.z
-mul r3.xyzw, r3.xyzw, r4.xyzw
-add r4.xyzw, r0.zzzz, l(-1.900000e+001, -2.020000e+001, -2.090000e+001, -1.800000e+001)
-mov_sat r1.zw, r4.wwwx
-mad r2.xy, r1.zwzz, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
-mul r1.zw, r1.zzzw, r1.zzzw
-mul r1.zw, r1.zzzw, r2.xxxy
-mul_sat r4.xyzw, r4.xyzw, l(8.333328e-001, 1.428574e+000, 1.111112e+000, 5.000000e-001)
-mad r5.xyzw, r4.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r4.xyzw, r4.xyzw, r4.xyzw
-mul r4.xyzw, r4.xyzw, r5.xyzw
-mul r2.x, r3.x, l(-4.000000e-003)
-mad r5.xyz, r3.xxxx, l(2.648486e-003, 2.553992e-003, 2.876000e-004, 0.000000e+000), l(3.951400e-005, 5.000800e-005, 8.200000e-005, 0.000000e+000)
-add r6.xyz, -r5.xyzx, l(9.391250e-001, 9.075000e-001, 1.306250e+000, 0.000000e+000)
-mad r5.xyz, r3.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(2.004750e+000, 1.904513e+000, 3.066525e+000, 0.000000e+000)
-mad r5.xyz, r0.wwww, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(3.130380e+000, 4.971780e+000, 9.943560e+000, 0.000000e+000)
-mad r5.xyz, r3.zzzz, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(3.967920e+000, 5.488560e+000, 8.719920e+000, 0.000000e+000)
-mad r5.xyz, r3.wwww, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(1.416800e+000, 1.355200e+000, 1.724800e+000, 0.000000e+000)
-mad r5.xyz, r1.zzzz, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(4.900000e-001, 3.100000e-001, 6.061000e-001, 0.000000e+000)
-mad r5.xyz, r4.xxxx, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(-6.000000e-003, -6.000000e-003, -6.000000e-003, 0.000000e+000)
-mad r5.xyz, r4.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(3.951400e-005, 5.000800e-005, 8.200000e-005, 0.000000e+000)
-mad r5.xyz, r4.zzzz, r6.xyzx, r5.xyzx
-mad r6.xyz, r3.xxxx, l(-2.028224e-003, -2.035720e-003, -2.058320e-003, 0.000000e+000), l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
-add r7.xyz, -r6.xyzx, l(3.247200e-001, 2.934360e-001, 4.847040e-001, 0.000000e+000)
-mad r6.xyz, r3.yyyy, r7.xyzx, r6.xyzx
-add r7.xyz, -r6.xyzx, l(6.965244e-001, 6.453700e-001, 1.065680e+000, 0.000000e+000)
-mad r6.xyz, r0.wwww, r7.xyzx, r6.xyzx
-add r7.xyz, -r6.xyzx, l(1.163591e+000, 2.076789e+000, 3.950000e+000, 0.000000e+000)
-mad r6.xyz, r3.zzzz, r7.xyzx, r6.xyzx
-add r7.xyz, -r6.xyzx, l(1.651404e+000, 2.481160e+000, 4.711014e+000, 0.000000e+000)
-mad r6.xyz, r3.wwww, r7.xyzx, r6.xyzx
-add r7.xyz, -r6.xyzx, l(1.035857e+000, 8.783280e-001, 1.178377e+000, 0.000000e+000)
-mad r6.xyz, r1.zzzz, r7.xyzx, r6.xyzx
-add r7.xyz, -r6.xyzx, l(1.090000e+000, 1.112650e+000, 1.615988e+000, 0.000000e+000)
-mad r6.xyz, r4.xxxx, r7.xyzx, r6.xyzx
-add r7.xyz, -r6.xyzx, l(-6.000000e-003, -6.000000e-003, -6.000000e-003, 0.000000e+000)
-mad r6.xyz, r4.yyyy, r7.xyzx, r6.xyzx
-add r7.xyz, -r6.xyzx, l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
-mad r6.xyz, r4.zzzz, r7.xyzx, r6.xyzx
-mad r7.xyz, r3.xxxx, l(-8.028224e-003, -8.035720e-003, -8.058321e-003, 0.000000e+000), l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
-add r8.xyz, -r7.xyzx, l(2.421619e-001, 2.212056e-001, 3.633830e-001, 0.000000e+000)
-mad r7.xyz, r3.yyyy, r8.xyzx, r7.xyzx
-add r8.xyz, -r7.xyzx, l(7.799220e-001, 7.335900e-001, 1.193280e+000, 0.000000e+000)
-mad r7.xyz, r0.wwww, r8.xyzx, r7.xyzx
-add r8.xyz, -r7.xyzx, l(8.800000e-001, 1.490000e+000, 2.959000e+000, 0.000000e+000)
-mad r7.xyz, r3.zzzz, r8.xyzx, r7.xyzx
-add r8.xyz, -r7.xyzx, l(2.100000e+000, 2.923000e+000, 5.043885e+000, 0.000000e+000)
-mad r7.xyz, r3.wwww, r8.xyzx, r7.xyzx
-add r8.xyz, -r7.xyzx, l(8.250000e-001, 7.206566e-001, 1.141998e+000, 0.000000e+000)
-mad r7.xyz, r1.zzzz, r8.xyzx, r7.xyzx
-add r8.xyz, -r7.xyzx, l(7.700000e-001, 6.513100e-001, 9.459450e-001, 0.000000e+000)
-mad r7.xyz, r4.xxxx, r8.xyzx, r7.xyzx
-add r8.xyz, -r7.xyzx, l(-5.500000e-003, -5.500000e-003, -5.500000e-003, 0.000000e+000)
-mad r7.xyz, r4.yyyy, r8.xyzx, r7.xyzx
-add r8.xyz, -r7.xyzx, l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
-mad r7.xyz, r4.zzzz, r8.xyzx, r7.xyzx
-mad r8.xyz, r3.xxxx, l(-9.019757e-003, -9.025004e-003, -9.040823e-003, 0.000000e+000), l(1.975680e-005, 2.500400e-005, 4.082400e-005, 0.000000e+000)
-add r9.xyz, -r8.xyzx, l(2.421619e-001, 2.212056e-001, 3.633800e-001, 0.000000e+000)
-mad r8.xyz, r3.yyyy, r9.xyzx, r8.xyzx
-add r9.xyz, -r8.xyzx, l(1.621500e+000, 1.576000e+000, 2.155200e+000, 0.000000e+000)
-mad r8.xyz, r0.wwww, r9.xyzx, r8.xyzx
-add r9.xyz, -r8.xyzx, l(1.964930e+000, 3.392445e+000, 7.710870e+000, 0.000000e+000)
-mad r8.xyz, r3.zzzz, r9.xyzx, r8.xyzx
-add r9.xyz, -r8.xyzx, l(2.560880e+000, 3.412600e+000, 6.328300e+000, 0.000000e+000)
-mad r8.xyz, r3.wwww, r9.xyzx, r8.xyzx
-add r9.xyz, -r8.xyzx, l(1.707700e+000, 1.640000e+000, 2.620000e+000, 0.000000e+000)
-mad r8.xyz, r1.zzzz, r9.xyzx, r8.xyzx
-add r9.xyz, -r8.xyzx, l(1.194310e+000, 1.036040e+000, 1.436400e+000, 0.000000e+000)
-mad r8.xyz, r4.xxxx, r9.xyzx, r8.xyzx
-add r9.xyz, -r8.xyzx, l(3.000000e-003, 0.000000e+000, 6.000000e-003, 0.000000e+000)
-mad r8.xyz, r4.yyyy, r9.xyzx, r8.xyzx
-add r9.xyz, -r8.xyzx, l(1.975680e-005, 2.500400e-005, 4.082400e-005, 0.000000e+000)
-mad r8.xyz, r4.zzzz, r9.xyzx, r8.xyzx
-mad r9.xyz, r3.xxxx, l(9.788320e-004, 9.732100e-004, 9.591760e-004, 0.000000e+000), l(2.116800e-005, 2.679000e-005, 4.082400e-005, 0.000000e+000)
-add r10.xyz, -r9.xyzx, l(2.160000e-001, 2.052000e-001, 3.304800e-001, 0.000000e+000)
-mad r9.xyz, r3.yyyy, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(6.742400e-001, 7.817600e-001, 1.284500e+000, 0.000000e+000)
-mad r9.xyz, r0.wwww, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(8.721000e-001, 1.759500e+000, 3.961360e+000, 0.000000e+000)
-mad r9.xyz, r3.zzzz, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(1.615000e+000, 2.659000e+000, 4.585000e+000, 0.000000e+000)
-mad r9.xyz, r3.wwww, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(1.800000e+000, 1.861200e+000, 2.580000e+000, 0.000000e+000)
-mad r9.xyz, r1.zzzz, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(9.135000e-001, 8.883000e-001, 1.228500e+000, 0.000000e+000)
-mad r9.xyz, r4.xxxx, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(-4.000000e-003, -4.000000e-003, -4.000000e-003, 0.000000e+000)
-mad r9.xyz, r4.yyyy, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(2.116800e-005, 2.679000e-005, 4.082400e-005, 0.000000e+000)
-mad r9.xyz, r4.zzzz, r10.xyzx, r9.xyzx
-mad r10.xyz, r3.xxxx, l(-4.028224e-003, -4.035720e-003, -4.058320e-003, 0.000000e+000), l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
-add r11.xyz, -r10.xyzx, l(1.646568e-001, 1.565256e-001, 2.520672e-001, 0.000000e+000)
-mad r10.xyz, r3.yyyy, r11.xyzx, r10.xyzx
-add r11.xyz, -r10.xyzx, l(1.462560e+000, 1.570899e+000, 2.166758e+000, 0.000000e+000)
-mad r10.xyz, r0.wwww, r11.xyzx, r10.xyzx
-add r11.xyz, -r10.xyzx, l(1.164042e+000, 2.259770e+000, 3.904699e+000, 0.000000e+000)
-mad r10.xyz, r3.zzzz, r11.xyzx, r10.xyzx
-add r11.xyz, -r10.xyzx, l(1.766009e+000, 2.676816e+000, 4.136159e+000, 0.000000e+000)
-mad r10.xyz, r3.wwww, r11.xyzx, r10.xyzx
-add r11.xyz, -r10.xyzx, l(1.259562e+000, 1.499783e+000, 2.380474e+000, 0.000000e+000)
-mad r10.xyz, r1.zzzz, r11.xyzx, r10.xyzx
-add r11.xyz, -r10.xyzx, l(6.909840e-001, 6.713280e-001, 9.283680e-001, 0.000000e+000)
-mad r10.xyz, r4.xxxx, r11.xyzx, r10.xyzx
-add r11.xyz, -r10.xyzx, l(-1.000000e-003, -1.000000e-003, -1.000000e-003, 0.000000e+000)
-mad r10.xyz, r4.yyyy, r11.xyzx, r10.xyzx
-add r11.xyz, -r10.xyzx, l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
-mad r10.xyz, r4.zzzz, r11.xyzx, r10.xyzx
-mad r11.xyz, -r3.xxxx, l(-4.000000e-003, -4.000000e-003, -4.000000e-003, 0.000000e+000), l(1.707726e-001, 2.339834e-001, 3.456922e-001, 0.000000e+000)
-mad r2.xyz, r3.yyyy, r11.xyzx, r2.xxxx
-add r11.xyz, -r2.xyzx, l(1.578248e+000, 2.017377e+000, 2.552835e+000, 0.000000e+000)
-mad r2.xyz, r0.wwww, r11.xyzx, r2.xyzx
-add r11.xyz, -r2.xyzx, l(2.078025e+000, 2.902406e+000, 3.754751e+000, 0.000000e+000)
-mad r2.xyz, r3.zzzz, r11.xyzx, r2.xyzx
-add r11.xyz, -r2.xyzx, l(1.868802e+000, 2.880198e+000, 4.115045e+000, 0.000000e+000)
-mad r2.xyz, r3.wwww, r11.xyzx, r2.xyzx
-add r11.xyz, -r2.xyzx, l(1.389114e+000, 1.828183e+000, 2.535327e+000, 0.000000e+000)
-mad r2.xyz, r1.zzzz, r11.xyzx, r2.xyzx
-add r11.xyz, -r2.xyzx, l(4.829149e-001, 5.058322e-001, 7.248505e-001, 0.000000e+000)
-mad r2.xyz, r4.xxxx, r11.xyzx, r2.xyzx
-add r11.xyz, -r2.xyzx, l(-4.000000e-003, -4.000000e-003, -4.000000e-003, 0.000000e+000)
-mad r2.xyz, r4.yyyy, r11.xyzx, r2.xyzx
-mad r2.xyz, r4.zzzz, -r2.xyzx, r2.xyzx
-mul r11.x, l(1.000000e+004), cb5[63].y
-mov_sat r11.x, r11.x
-mad r5.w, r11.x, l(-2.000000e+000), l(3.000000e+000)
-mul r6.w, r11.x, r11.x
-mul r5.w, r5.w, r6.w
-mad r11.xyzw, cb5[63].yyyy, l(1.000000e+003, 1.000000e+003, 1.000000e+003, 1.000000e+003), l(-1.000000e-001, -2.000000e-001, -3.000000e-001, -4.000000e-001)
-mul_sat r11.xyzw, r11.xyzw, l(1.000000e+001, 9.999999e+000, 1.000000e+001, 1.000000e+001)
-mad r12.xyzw, r11.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r11.xyzw, r11.xyzw, r11.xyzw
-mul r11.xyzw, r11.xyzw, r12.xyzw
-mad r12.xyz, cb5[63].yyyy, l(1.000000e+003, 1.000000e+003, 1.000000e+003, 0.000000e+000), l(-5.000000e-001, -5.600000e-001, -7.400000e-001, 0.000000e+000)
-mul_sat r6.w, r12.x, l(9.999998e+000)
-mad r7.w, r6.w, l(-2.000000e+000), l(3.000000e+000)
-mul r6.w, r6.w, r6.w
-mul r6.w, r6.w, r7.w
-add r6.xyz, -r5.xyzx, r6.xyzx
-mad r5.xyz, r5.wwww, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, r7.xyzx
-mad r5.xyz, r11.xxxx, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, r8.xyzx
-mad r5.xyz, r11.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, r9.xyzx
-mad r5.xyz, r11.zzzz, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, r10.xyzx
-mad r5.xyz, r11.wwww, r6.xyzx, r5.xyzx
-add r2.xyz, r2.xyzx, -r5.xyzx
-mad o8.xyz, r6.wwww, r2.xyzx, r5.xyzx
-add r7.xyzw, r0.zzzz, l(-5.500000e+000, -1.990000e+001, -4.000000e+000, -5.000000e+000)
-mul_sat r8.xyzw, r7.xyzz, l(6.666667e-001, 5.263159e-001, 8.333335e-001, 1.111111e+000)
-mad r9.xyzw, r8.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r8.xyzw, r8.xyzw, r8.xyzw
-mul r8.xyzw, r8.xyzw, r9.xyzw
-mul r2.x, r8.x, l(3.520000e-001)
-mad o8.w, r8.y, -r2.x, r2.x
-mad r2.xyz, r3.xxxx, l(2.722900e-002, 1.221600e-002, 3.100000e-003, 0.000000e+000), l(7.710000e-004, 1.000000e-003, 1.900000e-003, 0.000000e+000)
-add r5.xyz, -r2.xyzx, l(3.423420e+000, 1.702800e+000, 8.518510e-001, 0.000000e+000)
-mad r2.xyz, r3.yyyy, r5.xyzx, r2.xyzx
-add r5.xyz, -r2.xyzx, l(1.459000e+001, 7.200000e+000, 3.400000e+000, 0.000000e+000)
-mad r2.xyz, r0.wwww, r5.xyzx, r2.xyzx
-add r5.xyz, -r2.xyzx, l(1.974100e+001, 1.823050e+001, 1.969350e+001, 0.000000e+000)
-mad r2.xyz, r3.zzzz, r5.xyzx, r2.xyzx
-add r5.xyz, -r2.xyzx, l(2.459160e+001, 2.067120e+001, 1.733000e+001, 0.000000e+000)
-mad r2.xyz, r3.wwww, r5.xyzx, r2.xyzx
-add r5.xyz, -r2.xyzx, l(2.700000e+001, 1.562000e+001, 7.500000e+000, 0.000000e+000)
-mad r2.xyz, r1.zzzz, r5.xyzx, r2.xyzx
-add r5.xyz, -r2.xyzx, l(2.100000e+001, 8.000000e+000, 2.520000e+000, 0.000000e+000)
-mad r2.xyz, r4.xxxx, r5.xyzx, r2.xyzx
-add r5.xyz, -r2.xyzx, l(7.980000e-002, 1.728000e-002, 6.300000e-003, 0.000000e+000)
-mad r2.xyz, r4.yyyy, r5.xyzx, r2.xyzx
-add r5.xyz, -r2.xyzx, l(7.710000e-004, 1.000000e-003, 1.900000e-003, 0.000000e+000)
-mad r2.xyz, r4.zzzz, r5.xyzx, r2.xyzx
-mad r5.xyz, r3.xxxx, l(1.224420e-002, 3.050000e-003, -6.039999e-004, 0.000000e+000), l(6.168000e-004, 1.000000e-003, 1.804000e-003, 0.000000e+000)
-add r6.xyz, -r5.xyzx, l(3.170000e+000, 1.600000e+000, 7.900000e-001, 0.000000e+000)
-mad r5.xyz, r3.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(9.047040e+000, 4.960000e+000, 2.356000e+000, 0.000000e+000)
-mad r5.xyz, r0.wwww, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(1.862000e+001, 1.852400e+001, 1.858000e+001, 0.000000e+000)
-mad r5.xyz, r3.zzzz, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(2.000000e+001, 1.750000e+001, 1.540000e+001, 0.000000e+000)
-mad r5.xyz, r3.wwww, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(2.577300e+001, 1.459700e+001, 8.000000e+000, 0.000000e+000)
-mad r5.xyz, r1.zzzz, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(1.600000e+001, 7.100000e+000, 4.000000e+000, 0.000000e+000)
-mad r5.xyz, r4.xxxx, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(1.058400e-001, 2.217600e-002, 1.159200e-002, 0.000000e+000)
-mad r5.xyz, r4.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(6.168000e-004, 1.000000e-003, 1.804000e-003, 0.000000e+000)
-mad r5.xyz, r4.zzzz, r6.xyzx, r5.xyzx
-mad r6.xyz, r3.xxxx, l(1.754280e-002, 3.825000e-003, -4.000000e-004, 0.000000e+000), l(4.626000e-004, 9.000000e-004, 1.800000e-003, 0.000000e+000)
-add r9.xyz, -r6.xyzx, l(3.180000e+000, 1.600000e+000, 7.900000e-001, 0.000000e+000)
-mad r6.xyz, r3.yyyy, r9.xyzx, r6.xyzx
-add r9.xyz, -r6.xyzx, l(1.083760e+001, 5.704000e+000, 3.220000e+000, 0.000000e+000)
-mad r6.xyz, r0.wwww, r9.xyzx, r6.xyzx
-add r9.xyz, -r6.xyzx, l(1.863000e+001, 1.852500e+001, 1.857300e+001, 0.000000e+000)
-mad r6.xyz, r3.zzzz, r9.xyzx, r6.xyzx
-add r9.xyz, -r6.xyzx, l(1.950000e+001, 1.750000e+001, 1.540000e+001, 0.000000e+000)
-mad r6.xyz, r3.wwww, r9.xyzx, r6.xyzx
-add r9.xyz, -r6.xyzx, l(2.254000e+001, 1.146600e+001, 6.860000e+000, 0.000000e+000)
-mad r6.xyz, r1.zzzz, r9.xyzx, r6.xyzx
-add r9.xyz, -r6.xyzx, l(1.990000e+001, 5.600000e+000, 3.900000e+000, 0.000000e+000)
-mad r6.xyz, r4.xxxx, r9.xyzx, r6.xyzx
-add r9.xyz, -r6.xyzx, l(1.185800e-001, 2.587200e-002, 2.702000e-002, 0.000000e+000)
-mad r6.xyz, r4.yyyy, r9.xyzx, r6.xyzx
-add r9.xyz, -r6.xyzx, l(4.626000e-004, 9.000000e-004, 1.800000e-003, 0.000000e+000)
-mad r6.xyz, r4.zzzz, r9.xyzx, r6.xyzx
-mad r9.xyz, r3.xxxx, l(1.772744e-002, 4.185000e-003, 1.999999e-004, 0.000000e+000), l(2.775600e-004, 5.400000e-004, 1.200000e-003, 0.000000e+000)
-add r10.xyz, -r9.xyzx, l(3.180000e+000, 1.600000e+000, 7.900000e-001, 0.000000e+000)
-mad r9.xyz, r3.yyyy, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(1.192136e+001, 6.710000e+000, 3.410000e+000, 0.000000e+000)
-mad r9.xyz, r0.wwww, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(1.825740e+001, 1.815450e+001, 1.820150e+001, 0.000000e+000)
-mad r9.xyz, r3.zzzz, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(1.812240e+001, 1.500320e+001, 1.146275e+001, 0.000000e+000)
-mad r9.xyz, r3.wwww, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(1.202824e+001, 6.894815e+000, 3.970700e+000, 0.000000e+000)
-mad r9.xyz, r1.zzzz, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(6.768000e+000, 2.538000e+000, 1.269000e+000, 0.000000e+000)
-mad r9.xyz, r4.xxxx, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(4.248000e-001, 9.000000e-002, 1.080000e-001, 0.000000e+000)
-mad r9.xyz, r4.yyyy, r10.xyzx, r9.xyzx
-add r10.xyz, -r9.xyzx, l(2.775600e-004, 5.400000e-004, 1.200000e-003, 0.000000e+000)
-mad r9.xyz, r4.zzzz, r10.xyzx, r9.xyzx
-mad r10.xyz, r3.xxxx, l(1.022475e-002, 2.085000e-003, -3.900001e-004, 0.000000e+000), l(5.782500e-004, 7.500000e-004, 1.230000e-003, 0.000000e+000)
-add r13.xyz, -r10.xyzx, l(7.254800e-001, 6.425340e-001, 6.000000e-001, 0.000000e+000)
-mad r10.xyz, r3.yyyy, r13.xyzx, r10.xyzx
-add r13.xyz, -r10.xyzx, l(3.837190e+000, 3.195488e+000, 2.905488e+000, 0.000000e+000)
-mad r10.xyz, r0.wwww, r13.xyzx, r10.xyzx
-add r13.xyz, -r10.xyzx, l(1.108485e+001, 1.102244e+001, 1.105094e+001, 0.000000e+000)
-mad r10.xyz, r3.zzzz, r13.xyzx, r10.xyzx
-add r13.xyz, -r10.xyzx, l(1.170000e+001, 1.050000e+001, 9.240000e+000, 0.000000e+000)
-mad r10.xyz, r3.wwww, r13.xyzx, r10.xyzx
-add r13.xyz, -r10.xyzx, l(1.528460e+001, 1.096460e+001, 7.364600e+000, 0.000000e+000)
-mad r10.xyz, r1.zzzz, r13.xyzx, r10.xyzx
-add r13.xyz, -r10.xyzx, l(7.877000e+000, 3.444000e+000, 2.380000e+000, 0.000000e+000)
-mad r10.xyz, r4.xxxx, r13.xyzx, r10.xyzx
-add r13.xyz, -r10.xyzx, l(4.743200e-002, 1.034880e-002, 1.080800e-002, 0.000000e+000)
-mad r10.xyz, r4.yyyy, r13.xyzx, r10.xyzx
-add r13.xyz, -r10.xyzx, l(5.782500e-004, 7.500000e-004, 1.230000e-003, 0.000000e+000)
-mad r10.xyz, r4.zzzz, r13.xyzx, r10.xyzx
-mad r13.xyz, r3.xxxx, l(6.957200e-003, 3.388000e-003, 8.484000e-004, 0.000000e+000), l(4.507000e-004, 5.000000e-004, 7.548000e-004, 0.000000e+000)
-add r14.xyz, -r13.xyzx, l(7.032020e-001, 6.067766e-001, 6.771916e-001, 0.000000e+000)
-mad r13.xyz, r3.yyyy, r14.xyzx, r13.xyzx
-add r14.xyz, -r13.xyzx, l(7.368641e+000, 6.347540e+000, 6.481100e+000, 0.000000e+000)
-mad r13.xyz, r0.wwww, r14.xyzx, r13.xyzx
-add r14.xyz, -r13.xyzx, l(7.801700e+000, 1.014300e+001, 1.298568e+001, 0.000000e+000)
-mad r13.xyz, r3.zzzz, r14.xyzx, r13.xyzx
-add r14.xyz, -r13.xyzx, l(9.092000e+000, 9.526800e+000, 1.151900e+001, 0.000000e+000)
-mad r13.xyz, r3.wwww, r14.xyzx, r13.xyzx
-add r14.xyz, -r13.xyzx, l(7.029294e+000, 7.350000e+000, 8.137000e+000, 0.000000e+000)
-mad r13.xyz, r1.zzzz, r14.xyzx, r13.xyzx
-add r14.xyz, -r13.xyzx, l(2.505600e+000, 1.998000e+000, 1.853280e+000, 0.000000e+000)
-mad r13.xyz, r4.xxxx, r14.xyzx, r13.xyzx
-add r14.xyz, -r13.xyzx, l(4.416930e-002, 1.704780e-002, 8.911350e-003, 0.000000e+000)
-mad r13.xyz, r4.yyyy, r14.xyzx, r13.xyzx
-add r14.xyz, -r13.xyzx, l(4.507000e-004, 5.000000e-004, 7.548000e-004, 0.000000e+000)
-mad r13.xyz, r4.zzzz, r14.xyzx, r13.xyzx
-mad r14.xyz, r3.xxxx, l(1.054820e-002, 4.977500e-003, 1.068900e-003, 0.000000e+000), l(8.600000e-004, 1.010000e-003, 1.400000e-003, 0.000000e+000)
-add r15.xyz, -r14.xyzx, l(8.895505e-001, 7.530000e-001, 7.110516e-001, 0.000000e+000)
-mad r14.xyz, r3.yyyy, r15.xyzx, r14.xyzx
-add r15.xyz, -r14.xyzx, l(5.305420e+000, 4.753038e+000, 4.666377e+000, 0.000000e+000)
-mad r14.xyz, r0.wwww, r15.xyzx, r14.xyzx
-add r15.xyz, -r14.xyzx, l(8.002444e+000, 7.850800e+000, 9.324679e+000, 0.000000e+000)
-mad r3.xyz, r3.zzzz, r15.xyzx, r14.xyzx
-add r14.xyz, -r3.xyzx, l(7.036841e+000, 7.583012e+000, 8.178860e+000, 0.000000e+000)
-mad r3.xyz, r3.wwww, r14.xyzx, r3.xyzx
-add r14.xyz, -r3.xyzx, l(5.906243e+000, 6.056400e+000, 6.570790e+000, 0.000000e+000)
-mad r3.xyz, r1.zzzz, r14.xyzx, r3.xyzx
-add r14.xyz, -r3.xyzx, l(1.958190e+000, 1.530429e+000, 1.614245e+000, 0.000000e+000)
-mad r3.xyz, r4.xxxx, r14.xyzx, r3.xyzx
-add r14.xyz, -r3.xyzx, l(9.134220e-002, 3.525500e-002, 1.842870e-002, 0.000000e+000)
-mad r3.xyz, r4.yyyy, r14.xyzx, r3.xyzx
-add r14.xyz, -r3.xyzx, l(8.600000e-004, 1.010000e-003, 1.400000e-003, 0.000000e+000)
-mad r3.xyz, r4.zzzz, r14.xyzx, r3.xyzx
-add r4.xyz, -r2.xyzx, r5.xyzx
-mad r2.xyz, r5.wwww, r4.xyzx, r2.xyzx
-add r4.xyz, -r2.xyzx, r6.xyzx
-mad r2.xyz, r11.xxxx, r4.xyzx, r2.xyzx
-add r4.xyz, -r2.xyzx, r9.xyzx
-mad r2.xyz, r11.yyyy, r4.xyzx, r2.xyzx
-add r4.xyz, -r2.xyzx, r10.xyzx
-mad r2.xyz, r11.zzzz, r4.xyzx, r2.xyzx
-add r4.xyz, -r2.xyzx, r13.xyzx
-mad r2.xyz, r11.wwww, r4.xyzx, r2.xyzx
-add r3.xyz, -r2.xyzx, r3.xyzx
-mad o9.xyz, r6.wwww, r3.xyzx, r2.xyzx
-mov_sat r7.xyzw, r7.wwzw
-mad r9.xyzw, r7.wwzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r7.xyzw, r7.xyzw, r7.xyzw
-mul r7.xyzw, r7.xyzw, r9.xyzw
-add r9.xyzw, r0.zzzz, l(-1.600000e+001, -1.700000e+001, -7.000000e+000, -1.000000e+001)
-mul_sat r2.xy, r9.zwzz, l(3.333333e-001, 5.000000e-001, 0.000000e+000, 0.000000e+000)
-mad r3.xy, r2.xyxx, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
-mul r2.xy, r2.xyxx, r2.xyxx
-mul r2.xy, r2.xyxx, r3.xyxx
-mul_sat r2.z, r2.w, l(2.500000e-001)
-mad r2.w, r2.z, l(-2.000000e+000), l(3.000000e+000)
-mul r2.z, r2.z, r2.z
-mul r2.z, r2.z, r2.w
-mov_sat r9.xyz, r9.xyzx
-mad r3.xyz, r9.xyzx, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 0.000000e+000)
-mul r4.xyz, r9.xyzx, r9.xyzx
-mul r3.xyz, r3.xyzx, r4.xyzx
-add r9.xyzw, r0.zzzz, l(-2.200000e+001, -4.100000e+000, -2.000000e+001, -2.100000e+001)
-mov_sat r4.xy, r9.zwzz
-mad r5.xy, r4.xyxx, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
-mul r4.xy, r4.xyxx, r4.xyxx
-mul r4.xy, r4.xyxx, r5.xyxx
-mul_sat r9.xyzw, r9.xyzw, l(5.000000e-001, 1.000001e+001, 9.090906e-001, 1.111112e+000)
-mad r10.xyzw, r9.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r9.xyzw, r9.xyzw, r9.xyzw
-mul r9.xyzw, r9.xyzw, r10.xyzw
-mad r10.xyzw, r7.zzzz, l(2.999997e-002, -4.600000e-002, -5.000007e-002, -9.000003e-002), l(1.650000e+000, 1.580000e+000, 1.570000e+000, 1.610000e+000)
-add r13.xyzw, -r10.xyzw, l(1.680000e+000, 1.570000e+000, 1.500000e+000, 1.500000e+000)
-mad r10.xyzw, r7.wwww, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.660000e+000, 1.570000e+000, 1.520000e+000, 1.520000e+000)
-mad r10.xyzw, r0.wwww, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.580000e+000, 1.540000e+000, 1.540000e+000)
-mad r10.xyzw, r2.xxxx, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.660000e+000, 1.580000e+000, 1.570000e+000, 1.570000e+000)
-mad r10.xyzw, r2.yyyy, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.570000e+000, 1.560000e+000, 1.560000e+000)
-mad r10.xyzw, r2.zzzz, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.570000e+000, 1.560000e+000, 1.560000e+000)
-mad r10.xyzw, r3.xxxx, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.600000e+000, 1.580000e+000, 1.580000e+000)
-mad r10.xyzw, r3.yyyy, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.610000e+000, 1.580000e+000, 1.580000e+000)
-mad r10.xyzw, r1.zzzz, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.590000e+000, 1.580000e+000, 1.580000e+000)
-mad r10.xyzw, r1.wwww, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.690000e+000, 1.600000e+000, 1.590000e+000, 1.590000e+000)
-mad r10.xyzw, r4.xxxx, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.690000e+000, 1.580000e+000, 1.570000e+000, 1.610000e+000)
-mad r10.xyzw, r4.yyyy, r13.xyzw, r10.xyzw
-add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.580000e+000, 1.570000e+000, 1.610000e+000)
-mad r2.w, r4.x, l(9.999990e-003), l(1.610000e+000)
-add r4.z, -r2.w, l(1.620000e+000)
-mad r2.w, r4.y, r4.z, r2.w
-add r4.z, -r2.w, l(1.610000e+000)
-mad r2.w, r9.x, r4.z, r2.w
-mad r10.xyzw, r9.xxxx, r13.xyzw, r10.xyzw
-mad r13.xyzw, r7.zzww, l(-3.999996e-002, -3.999996e-002, 2.200000e-001, -1.500000e-001), l(1.510000e+000, 1.540000e+000, 7.700000e-001, 8.000000e-001)
-add r14.xyzw, -r13.xyzw, l(1.470000e+000, 1.490000e+000, 9.900000e-001, 6.500000e-001)
-mad r5.xy, r7.wwww, r14.xyxx, r13.xyxx
-add r6.xy, -r5.xyxx, l(1.470000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r0.wwww, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.460000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r2.xxxx, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.460000e+000, 1.510000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r2.yyyy, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.460000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r2.zzzz, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.460000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r3.xxxx, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.470000e+000, 1.490000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r3.yyyy, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.470000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r1.zzzz, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.470000e+000, 1.510000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r1.wwww, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.470000e+000, 1.510000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r4.xxxx, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.510000e+000, 1.550000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r4.yyyy, r6.xyxx, r5.xyxx
-add r6.xy, -r5.xyxx, l(1.510000e+000, 1.540000e+000, 0.000000e+000, 0.000000e+000)
-mad r5.xy, r9.xxxx, r6.xyxx, r5.xyxx
-add r2.w, r2.w, -r10.x
-mad r2.w, r5.w, r2.w, r10.x
-add r4.z, -r2.w, r10.y
-mad r2.w, r11.x, r4.z, r2.w
-add r4.z, -r2.w, r10.z
-mad r2.w, r11.y, r4.z, r2.w
-add r4.z, -r2.w, r10.w
-mad r2.w, r11.z, r4.z, r2.w
-add r4.z, -r2.w, r5.x
-mad r2.w, r11.w, r4.z, r2.w
-add r4.z, -r2.w, r5.y
-mad o9.w, r6.w, r4.z, r2.w
-add r5.xyz, cb3[53].xyzx, -cb3[54].xyzx
-mad r5.xyz, r9.yyyy, r5.xyzx, cb3[54].xyzx
-add r10.xyzw, r0.zzzz, l(-2.190000e+001, -5.200000e+000, -6.700000e+000, -2.110000e+001)
-mul_sat r15.xyzw, r10.xyzw, l(9.999962e+000, 6.666667e-001, 1.886792e-001, 1.098901e+000)
-mad r16.xyzw, r15.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
-mul r15.xyzw, r15.xyzw, r15.xyzw
-mul r15.xyzw, r15.xyzw, r16.xyzw
-add r6.xyz, -r5.xyzx, cb3[54].xyzx
-mad r16.xyz, r15.xxxx, r6.xyzx, r5.xyzx
-add r5.xyz, r16.xyzx, cb1[15].xyzx
-mul r6.xyz, r5.yyyy, cb1[9].xywx
-mad r6.xyz, cb1[8].xywx, r5.xxxx, r6.xyzx
-mad r5.xyz, cb1[10].xywx, r5.zzzz, r6.xyzx
-add r5.xyz, r5.xyzx, cb1[11].xywx
-div r5.xy, r5.xyxx, r5.zzzz
-mad o10.xy, r5.xyxx, l(5.000000e-001, -5.000000e-001, 0.000000e+000, 0.000000e+000), l(5.000000e-001, 5.000000e-001, 0.000000e+000, 0.000000e+000)
-lt r2.w, l(1.290000e+000), cb5[86].w
-lt r4.z, cb5[63].y, l(6.100000e-004)
-and r2.w, r2.w, r4.z
-lt r4.z, cb5[86].x, l(1.327000e+000)
-and r2.w, r2.w, r4.z
-lt r4.z, l(-1.900000e+000), cb1[15].z
-and r2.w, r2.w, r4.z
-lt r4.z, l(9.600000e-001), cb2[13].w
-and r2.w, r2.w, r4.z
-and o10.z, r2.w, l(0x3f800000)
-max r16.w, r16.z, l(2.900000e-001)
-mul r2.w, r12.z, r12.y
-mul_sat r2.w, r2.w, l(-1.785710e+002)
-mad r2.w, r2.w, l(-1.100000e-002), l(2.100000e-002)
-add r4.z, -r2.w, l(5.100000e-002)
-mad r4.z, r8.z, r4.z, r2.w
-add r5.x, -r4.z, l(9.100000e-001)
-mad r4.z, r15.y, r5.x, r4.z
-add r5.x, -r4.z, l(9.100000e-001)
-mad r4.z, r15.z, r5.x, r4.z
-add r5.x, -r4.z, l(9.100000e-001)
-mad r4.z, r3.w, r5.x, r4.z
-add r5.x, -r4.z, l(9.100000e-001)
-mad r4.z, r4.w, r5.x, r4.z
-add r5.x, -r4.z, l(5.100000e-002)
-mad r4.z, r9.z, r5.x, r4.z
-add r2.w, r2.w, -r4.z
-mad r2.w, r15.w, r2.w, r4.z
-add r5.xyz, r16.xywx, cb1[15].xyzx
-mul r4.z, r5.y, cb1[9].w
-mad r4.z, cb1[8].w, r5.x, r4.z
-mad r4.z, cb1[10].w, r5.z, r4.z
-add r4.z, r4.z, cb1[11].w
-lt r4.z, r4.z, l(-1.000000e-001)
-movc r4.z, r4.z, l(-1.000000), l(1.000000)
-mul o11.w, r2.w, r4.z
-mad r12.xyzw, r5.wwww, l(0.000000e+000, -4.000000e+001, -4.000000e+001, 0.000000e+000), l(1.450000e+003, 7.000000e+002, 5.000000e+002, 9.000000e+002)
-add r15.xyzw, -r12.xyzw, l(1.200000e+003, 6.500000e+002, 3.800000e+002, 7.100000e+002)
-mad r12.xyzw, r11.xxxx, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.500000e+002, 3.300000e+002, 6.800000e+002)
-mad r12.xyzw, r11.yyyy, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.500000e+002, 4.000000e+002, 6.800000e+002)
-mad r12.xyzw, r11.zzzz, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.600000e+002, 2.700000e+002, 6.800000e+002)
-mad r12.xyzw, r11.wwww, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.600000e+002, 3.000000e+002, 6.800000e+002)
-mad o12.xyzw, r6.wwww, r15.xyzw, r12.xyzw
-mad r12.xyzw, r5.wwww, l(0.000000e+000, -4.000000e+001, 0.000000e+000, 4.777778e-003), l(9.400000e+002, 4.900000e+002, 3.400000e-001, 2.300000e-002)
-add r15.xyzw, -r12.xyzw, l(1.199000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
-mad r12.xyzw, r11.xxxx, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
-mad r12.xyzw, r11.yyyy, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
-mad r12.xyzw, r11.zzzz, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
-mad r12.xyzw, r11.wwww, r15.xyzw, r12.xyzw
-add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
-mad r12.xyzw, r6.wwww, r15.xyzw, r12.xyzw
-add r5.xy, r0.zzzz, l(-5.800000e+000, -8.000000e+000, 0.000000e+000, 0.000000e+000)
-mul_sat r5.xy, r5.xyxx, l(5.000005e+000, 2.500000e-001, 0.000000e+000, 0.000000e+000)
-mad r6.xy, r5.xyxx, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
-mul r5.xy, r5.xyxx, r5.xyxx
-mul r5.xy, r5.xyxx, r6.xyxx
-mul_sat r2.w, r10.w, l(1.111112e+000)
-mad r4.z, r2.w, l(-2.000000e+000), l(3.000000e+000)
-mul r2.w, r2.w, r2.w
-mul r2.w, r2.w, r4.z
-mul r10.xyzw, r5.xxxx, l(1.400000e-001, 1.500000e-001, 1.200000e-002, 4.000000e-002)
-mad r15.xyzw, -r5.xxxx, l(1.400000e-001, 1.400000e-001, 1.500000e-001, 1.500000e-001), l(2.200000e+001, 1.500000e+001, 1.300000e+001, 1.600000e+001)
-mad r15.xyzw, r0.wwww, r15.xyzw, r10.xxyy
-add r17.xyzw, -r15.xyzw, l(3.500000e+001, 3.500000e+001, 3.500000e+001, 4.000000e+001)
-mad r15.xyzw, r3.zzzz, r17.xyzw, r15.xyzw
-add r17.xyzw, -r15.xyzw, l(1.900000e+001, 1.900000e+001, 1.900000e+001, 2.000000e+001)
-mad r15.xyzw, r5.yyyy, r17.xyzw, r15.xyzw
-add r17.xyzw, -r15.xyzw, l(4.400000e+001, 4.400000e+001, 4.400000e+001, 4.400000e+001)
-mad r15.xyzw, r3.wwww, r17.xyzw, r15.xyzw
-add r6.xyz, -r15.xywx, l(1.200000e+001, 3.000000e+000, 4.000000e+000, 0.000000e+000)
-mad r6.xyz, r4.wwww, r6.xyzx, r15.xywx
-mad r6.xyz, r9.zzzz, -r6.xyzx, r6.xyzx
-mad r4.z, r4.w, -r15.z, r15.z
-mad r4.z, r9.z, -r4.z, r4.z
-mad r4.z, r2.w, -r4.z, r4.z
-mad r6.xyz, r2.wwww, -r6.xyzx, r6.xyzx
-mad r8.xyz, -r5.xxxx, l(1.500000e-001, 1.200000e-002, 4.000000e-002, 0.000000e+000), l(1.200000e+001, 1.800000e+001, 1.900000e+001, 0.000000e+000)
-mad r8.xyz, r0.wwww, r8.xyzx, r10.yzwy
-add r10.xyz, -r8.xyzx, l(3.500000e+001, 3.800000e+001, 3.300000e+001, 0.000000e+000)
-mad r8.xyz, r3.zzzz, r10.xyzx, r8.xyzx
-add r10.xyz, -r8.xyzx, l(2.000000e+001, 5.700000e+001, 5.100000e+001, 0.000000e+000)
-mad r5.xyz, r5.yyyy, r10.xyzx, r8.xyzx
-add r8.xyz, -r5.xyzx, l(4.400000e+001, 4.400000e+001, 2.900000e+001, 0.000000e+000)
-mad r5.xyz, r3.wwww, r8.xyzx, r5.xyzx
-add r8.xyz, -r5.xyzx, l(4.000000e+000, 4.000000e+000, 2.300000e+000, 0.000000e+000)
-mad r5.xyz, r4.wwww, r8.xyzx, r5.xyzx
-mad r5.xyz, r9.zzzz, -r5.xyzx, r5.xyzx
-mad r5.xyz, r2.wwww, -r5.xyzx, r5.xyzx
-add r2.w, -r6.x, r6.y
-mad r2.w, r5.w, r2.w, r6.x
-add r3.z, -r2.w, r4.z
-mad r2.w, r11.x, r3.z, r2.w
-add r3.z, -r2.w, r6.z
-mad r2.w, r11.y, r3.z, r2.w
-add r3.z, -r2.w, r5.x
-mad r2.w, r11.z, r3.z, r2.w
-add r3.z, -r2.w, r5.y
-mad r2.w, r11.w, r3.z, r2.w
-add r3.z, -r2.w, r5.z
-mad o14.w, r6.w, r3.z, r2.w
-mad r5.xyz, r0.wwww, r14.zwzz, r13.zwzz
-add r6.xyz, -r5.zyzz, l(5.000000e-001, 6.000000e-001, 7.000000e-001, 0.000000e+000)
-mad r5.xyz, r2.xxxx, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(5.000000e-001, 6.000000e-001, 5.000000e-001, 0.000000e+000)
-mad r5.xyz, r2.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(5.000000e-001, 6.000000e-001, 5.000000e-001, 0.000000e+000)
-mad r5.xyz, r2.zzzz, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(5.000000e-001, 6.000000e-001, 5.000000e-001, 0.000000e+000)
-mad r5.xyz, r3.xxxx, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(6.000000e-001, 6.000000e-001, 7.000000e-001, 0.000000e+000)
-mad r5.xyz, r3.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(6.000000e-001, 7.000000e-001, 6.000000e-001, 0.000000e+000)
-mad r5.xyz, r1.zzzz, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(7.000000e-001, 7.500000e-001, 7.000000e-001, 0.000000e+000)
-mad r5.xyz, r1.wwww, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(7.700000e-001, 8.000000e-001, 7.700000e-001, 0.000000e+000)
-mad r5.xyz, r4.xxxx, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(7.700000e-001, 8.000000e-001, 7.700000e-001, 0.000000e+000)
-mad r5.xyz, r4.yyyy, r6.xyzx, r5.xyzx
-add r6.xyz, -r5.xyzx, l(7.700000e-001, 8.000000e-001, 7.700000e-001, 0.000000e+000)
-mad r2.w, r7.z, l(-4.999995e-002), l(7.700000e-001)
-add r3.z, -r2.w, l(8.400000e-001)
-mad r2.w, r7.w, r3.z, r2.w
-add r3.z, -r2.w, l(7.700000e-001)
-mad r2.w, r0.w, r3.z, r2.w
-add r3.z, -r2.w, l(7.100000e-001)
-mad r2.w, r2.x, r3.z, r2.w
-add r3.z, -r2.w, l(7.100000e-001)
-mad r2.w, r2.y, r3.z, r2.w
-add r3.z, -r2.w, l(7.100000e-001)
-mad r2.w, r2.z, r3.z, r2.w
-add r3.z, -r2.w, l(7.400000e-001)
-mad r2.w, r3.x, r3.z, r2.w
-add r3.z, -r2.w, l(7.700000e-001)
-mad r2.w, r3.y, r3.z, r2.w
-add r3.z, -r2.w, l(7.900000e-001)
-mad r2.w, r1.z, r3.z, r2.w
-add r3.z, -r2.w, l(7.700000e-001)
-mad r2.w, r1.w, r3.z, r2.w
-add r3.z, -r2.w, l(7.700000e-001)
-mad r2.w, r4.x, r3.z, r2.w
-add r3.z, -r2.w, l(7.700000e-001)
-mad r2.w, r4.y, r3.z, r2.w
-add r3.z, -r2.w, l(7.700000e-001)
-mad r2.w, r9.x, r3.z, r2.w
-mad r10.xyzw, r7.xyzw, l(2.800000e-001, -2.000004e-002, 1.700000e-001, 6.000000e+002), l(6.000000e-001, 9.200000e-001, 6.000000e-001, 4.000000e+003)
-add r13.xyzw, -r10.xyzw, l(7.700000e-001, 7.700000e-001, 7.700000e-001, 6.200000e+003)
-mad r8.xyz, r0.wwww, r13.xywx, r10.xywx
-add r10.xyw, -r8.xyxz, l(8.800000e-001, 8.500000e-001, 0.000000e+000, 6.700000e+003)
-mad r8.xyz, r2.xxxx, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(6.000000e-001, 7.200000e-001, 0.000000e+000, 7.800000e+003)
-mad r8.xyz, r2.yyyy, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(6.000000e-001, 9.000000e-001, 0.000000e+000, 7.700000e+003)
-mad r8.xyz, r2.zzzz, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(6.000000e-001, 9.000000e-001, 0.000000e+000, 7.700000e+003)
-mad r8.xyz, r3.xxxx, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(7.700000e-001, 9.000000e-001, 0.000000e+000, 7.700000e+003)
-mad r8.xyz, r3.yyyy, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(7.700000e-001, 9.000000e-001, 0.000000e+000, 5.400000e+003)
-mad r8.xyz, r1.zzzz, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(7.500000e-001, 8.500000e-001, 0.000000e+000, 6.000000e+003)
-mad r8.xyz, r1.wwww, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(9.000000e-001, 7.700000e-001, 0.000000e+000, 6.000000e+003)
-mad r8.xyz, r4.xxxx, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(5.000000e-001, 9.000000e-001, 0.000000e+000, 4.000000e+003)
-mad r8.xyz, r4.yyyy, r10.xywx, r8.xyzx
-add r10.xyw, -r8.xyxz, l(6.000000e-001, 9.200000e-001, 0.000000e+000, 4.000000e+003)
-mad r3.z, r7.w, r13.z, r10.z
-add r3.w, -r3.z, l(8.100000e-001)
-mad r3.z, r0.w, r3.w, r3.z
-add r3.w, -r3.z, l(7.200000e-001)
-mad r3.z, r2.x, r3.w, r3.z
-add r3.w, -r3.z, l(7.600000e-001)
-mad r3.z, r2.y, r3.w, r3.z
-add r3.w, -r3.z, l(7.600000e-001)
-mad r3.z, r2.z, r3.w, r3.z
-add r3.w, -r3.z, l(7.000000e-001)
-mad r3.z, r3.x, r3.w, r3.z
-add r3.w, -r3.z, l(7.000000e-001)
-mad r3.z, r3.y, r3.w, r3.z
-add r3.w, -r3.z, l(7.800000e-001)
-mad r3.z, r1.z, r3.w, r3.z
-add r3.w, -r3.z, l(7.700000e-001)
-mad r3.z, r1.w, r3.w, r3.z
-add r3.w, -r3.z, l(7.000000e-001)
-mad r3.z, r4.x, r3.w, r3.z
-add r3.w, -r3.z, l(6.000000e-001)
-mad r3.z, r4.y, r3.w, r3.z
-add r3.w, -r3.z, l(6.000000e-001)
-mad r13.x, r9.x, r3.w, r3.z
-mad r14.xyz, r9.xxxx, r6.xyzx, r5.xyzx
-mad r5.xyz, r9.xxxx, r10.xywx, r8.xyzx
-mad r3.zw, r7.zzzz, l(0.000000e+000, 0.000000e+000, -2.400000e+003, -2.600000e+003), l(0.000000e+000, 0.000000e+000, 7.900000e+003, 6.900000e+003)
-add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 6.800000e+003)
-mad r3.zw, r7.wwww, r4.zzzw, r3.zzzw
-add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.400000e+003)
-mad r3.zw, r0.wwww, r4.zzzw, r3.zzzw
-add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
-mad r3.zw, r2.xxxx, r4.zzzw, r3.zzzw
-add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
-mad r2.xy, r2.yyyy, r4.zwzz, r3.zwzz
-add r3.zw, -r2.xxxy, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
-mad r2.xy, r2.zzzz, r3.zwzz, r2.xyxx
-add r3.zw, -r2.xxxy, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
-mad r2.xy, r3.xxxx, r3.zwzz, r2.xyxx
-add r3.xz, -r2.xxyx, l(6.900000e+003, 0.000000e+000, 7.900000e+003, 0.000000e+000)
-mad r2.xy, r3.yyyy, r3.xzxx, r2.xyxx
-add r3.xy, -r2.xyxx, l(6.900000e+003, 7.900000e+003, 0.000000e+000, 0.000000e+000)
-mad r2.xy, r1.zzzz, r3.xyxx, r2.xyxx
-add r3.xy, -r2.xyxx, l(6.900000e+003, 7.900000e+003, 0.000000e+000, 0.000000e+000)
-mad r1.zw, r1.wwww, r3.xxxy, r2.xxxy
-add r2.xy, -r1.zwzz, l(6.900000e+003, 7.800000e+003, 0.000000e+000, 0.000000e+000)
-mad r1.zw, r4.xxxx, r2.xxxy, r1.zzzw
-add r2.xy, -r1.zwzz, l(7.900000e+003, 6.900000e+003, 0.000000e+000, 0.000000e+000)
-mad r1.zw, r4.yyyy, r2.xxxy, r1.zzzw
-add r2.xy, -r1.zwzz, l(7.900000e+003, 6.900000e+003, 0.000000e+000, 0.000000e+000)
-mad r13.yz, r9.xxxx, r2.xxyx, r1.zzwz
-mov r14.w, l(7900.000000)
-add r1.zw, -r14.xxxw, r14.yyyw
-mad r1.zw, r5.wwww, r1.zzzw, r14.xxxw
-add r2.y, -r1.z, r2.w
-mov r2.z, l(0)
-mad r1.zw, r11.xxxx, r2.yyyz, r1.zzzw
-add r2.y, -r1.z, r5.x
-mov r2.z, l(0)
-mad r1.zw, r11.yyyy, r2.yyyz, r1.zzzw
-add r2.xy, -r1.zwzz, r5.yzyy
-mad r1.zw, r11.zzzz, r2.xxxy, r1.zzzw
-add r2.xy, -r1.zwzz, r13.xyxx
-mad r1.zw, r11.wwww, r2.xxxy, r1.zzzw
-mov r13.w, r14.z
-add r2.xy, -r1.zwzz, r13.wzww
-mad o14.yz, r6.wwww, r2.xxyx, r1.zzwz
-dp2 r0.w, r12.xyxx, l(2.200000e-001, 7.800000e-001, 0.000000e+000, 0.000000e+000)
-div r0.w, cb1[15].z, r0.w
-max r0.w, r0.w, l(2.100000e-001)
-min r0.w, r0.w, l(1.500000e+000)
-add r1.z, -r0.w, l(1.500000e+000)
-mad r1.z, r8.w, r1.z, r0.w
-add r0.w, r0.w, -r1.z
-mad r0.w, r9.w, r0.w, r1.z
-mad r1.z, r5.w, l(1.000000e-001), l(1.300000e+000)
-add r1.w, -r1.z, l(1.500000e+000)
-mad r1.z, r11.x, r1.w, r1.z
-add r1.w, -r1.z, l(1.500000e+000)
-mad r1.z, r11.y, r1.w, r1.z
-add r1.w, -r1.z, l(1.500000e+000)
-mad r1.z, r11.z, r1.w, r1.z
-add r1.w, -r1.z, l(1.960000e+000)
-mad r1.z, r11.w, r1.w, r1.z
-add r0.w, r0.w, -r1.z
-mad o15.x, r6.w, r0.w, r1.z
-mov o0.zw, l(0,0,0,1.000000)
-mov o1.z, r0.x
-mov r1.y, l(0)
-mov o6.xyzw, r1.yyyx
-mov o10.w, r0.z
-mov o11.xyz, r16.xywx
-mov o13.xyzw, r12.xyzw
-mov o14.x, l(0)
-mov o15.yzw, l(0,0,0,0)
-mov o2.x, r0.y
-ret
+//AaronX 3.0.0 bloom shader	//Copyright Boris Vorontsov, Sonic Ether, John Chapman, gp65cj04, Aaron.
+
+#include "ENBFeeder.fxh"
+
+float4 Timer;
+float4 ScreenSize;
+float4 Weather;
+Texture2D TextureDownsampled;
+Texture2D TextureColor;
+Texture2D TextureOriginal;
+Texture2D TextureDepth;
+Texture2D RenderTarget1024;
+Texture2D RenderTarget512;
+Texture2D RenderTarget256;
+Texture2D RenderTarget128;
+Texture2D RenderTarget64;
+Texture2D RenderTarget32;
+Texture2D RenderTargetRGBA32;
+Texture2D RenderTargetRGBA64F;
+// === Cloud Controls ===
+
+// w_extrasunny
+uniform float CloudDensity_ExtraSunny < string UIName = "Clouds ExtraSunny: Density"; float UIMin = 0.0; float UIMax = 2.0; > = 1.0;
+uniform float CloudNoise_ExtraSunny   < string UIName = "Clouds ExtraSunny: Noise"; float UIMin = 0.0; float UIMax = 1.0; > = 0.6;
+uniform float CloudSpeed_ExtraSunny   < string UIName = "Clouds ExtraSunny: Speed"; float UIMin = 0.0; float UIMax = 5.0; > = 1.0;
+
+// w_clear
+uniform float CloudDensity_Clear < string UIName = "Clouds Clear: Density"; float UIMin = 0.0; float UIMax = 2.0; > = 1.0;
+uniform float CloudNoise_Clear   < string UIName = "Clouds Clear: Noise"; float UIMin = 0.0; float UIMax = 1.0; > = 0.7;
+uniform float CloudSpeed_Clear   < string UIName = "Clouds Clear: Speed"; float UIMin = 0.0; float UIMax = 5.0; > = 1.0;
+
+// w_clearing
+uniform float CloudDensity_Clearing < string UIName = "Clouds Clearing: Density"; float UIMin = 0.0; float UIMax = 2.0; > = 1.0;
+uniform float CloudNoise_Clearing   < string UIName = "Clouds Clearing: Noise"; float UIMin = 0.0; float UIMax = 1.0; > = 0.7;
+uniform float CloudSpeed_Clearing   < string UIName = "Clouds Clearing: Speed"; float UIMin = 0.0; float UIMax = 5.0; > = 1.0;
+
+// w_neutral
+uniform float CloudDensity_Neutral < string UIName = "Clouds Neutral: Density"; float UIMin = 0.0; float UIMax = 2.0; > = 1.0;
+uniform float CloudNoise_Neutral   < string UIName = "Clouds Neutral: Noise"; float UIMin = 0.0; float UIMax = 1.0; > = 0.7;
+uniform float CloudSpeed_Neutral   < string UIName = "Clouds Neutral: Speed"; float UIMin = 0.0; float UIMax = 5.0; > = 1.0;
+
+// w_rain
+uniform float CloudDensity_Rain < string UIName = "Clouds Rain: Density"; float UIMin = 0.0; float UIMax = 2.0; > = 1.5;
+uniform float CloudNoise_Rain   < string UIName = "Clouds Rain: Noise"; float UIMin = 0.0; float UIMax = 1.0; > = 0.5;
+uniform float CloudSpeed_Rain   < string UIName = "Clouds Rain: Speed"; float UIMin = 0.0; float UIMax = 5.0; > = 2.0;
+
+// w_thunder
+uniform float CloudDensity_Thunder < string UIName = "Clouds Thunder: Density"; float UIMin = 0.0; float UIMax = 2.0; > = 1.5;
+uniform float CloudNoise_Thunder   < string UIMame = "Clouds Thunder: Noise"; float UIMin = 0.0; float UIMax = 1.0; > = 0.5;
+uniform float CloudSpeed_Thunder   < string UIName = "Clouds Thunder: Speed"; float UIMin = 0.0; float UIMax = 5.0; > = 2.0;
+
+// w_clouds
+uniform float CloudDensity_Clouds < string UIName = "Clouds Clouds: Density"; float UIMin = 0.0; float UIMax = 2.0; > = 1.5;
+uniform float CloudNoise_Clouds   < string UIName = "Clouds Clouds: Noise"; float UIMin = 0.0; float UIMax = 1.0; > = 0.5;
+uniform float CloudSpeed_Clouds   < string UIName = "Clouds Clouds: Speed"; float UIMin = 0.0; float UIMax = 5.0; > = 2.0;
+
+Texture2D noisetex < string ResourceName = "AaronX/18690.png"; > ;
+Texture2D ray < string ResourceName = "AaronX/lightning.png"; > ;
+Texture2D shape < string ResourceName = "AaronX/LensRain.png"; > ;
+
+static const float2 rcpFrame = float2(ScreenSize.y, ScreenSize.y * ScreenSize.z);
+//BLOOM
+float b < string UIName = "Bloom:: Intensité"; float UIMin = 0.0; float UIMax = 0.25; float UIStep = 0.0005; > = { 0.067 };
+
+//LENS FLARE
+int separator0 < string UIName = " "; int UIMin = 0; int UIMax = 0; > = { 0 };
+bool gp < string UIName = "GPLens"; > = { false };
+float gpi < string UIName = "GPLens:: Intensité"; float UIMin = 0.0; float UIMax = 0.1; float UIStep = 0.0001; > = { 0.0004 };
+float gpt < string UIName = "GPLens:: Seuil"; float UIMin = 0.0; float UIMax = 60.0; > = { 29.0 };
+float gpca < string UIName = "GPLens:: Distorsion chromatique"; float UIStep = 0.0001; > = { 0.01 };
+float gpfd < string UIName = "GPLens:: Dispersion de la lumière"; float UIMin = 0.0; float UIMax = 10.0; > = { 1.25 };
+float gphw < string UIName = "GPLens:: Largeur du halo"; float UIMin = 0.0; float UIMax = 1.0; float UIStep = 0.005; > = { 0.5 };
+float gpdesat < string UIName = "GPLens:: Désaturation"; > = { 1.0 };
+float3 gptint < string UIName = "GPLens:: Teinte"; string UIWidget = "color"; > = { 1.0, 1.0, 1.0 };
+
+//RAYON DE LUNE
+int separator1 < string UIName = "  "; int UIMin = 0; int UIMax = 0; > = { 0 };
+float3 rcol < string UIName = "Rayon de lune:: Couleur"; string UIWidget = "color"; > = { 0.25, 0.31, 0.44 };
+float rin < string UIName = "Rayon de lune:: Intensité"; float UIMin = 0.0; float UIMax = 1.0; float UIStep = 0.0005; > = { 0.175 };
+float rwi < string UIName = "Rayon de lune:: Propagation"; float UIMin = 0.0; float UIMax = 1.0; float UIStep = 0.0005; > = { 0.05 };
+float rde < string UIName = "Rayon de lune:: Décroissance"; float UIMin = 0.0; float UIMax = 100.0; float UIStep = 0.1; > = { 0.0 };
+float rca < string UIName = "Rayon de lune:: AC"; float UIMin = -10.0; float UIMax = 10.0; float UIStep = 0.05; > = { 1.5 };
+float rsc < string UIName = "Rayon de lune:: Mise à l'échelle de l'image"; float UIMin = 0.05; float UIMax = 1.0; float UIStep = 0.0025; > = { 0.75 };
+
+//LENTILLE DE PLUIE
+int separator2 < string UIName = "   "; int UIMin = 0; int UIMax = 0; > = { 0 };
+float lintensity < string UIName = "Lentille de pluie:: Intensité"; float UIMin = 0.0; float UIMax = 10.0; > = { 1.0 };
+float lsize < string UIName = "Lentille de pluie:: Taille"; float UIStep = 0.001; > = { 0.05 };
+float lspeed < string UIName = "Lentille de pluie:: Vitesse"; float UIMin = 0.001; float UIMax = 100.0; float UIStep = 0.1; > = { 21.0 };
+float grad < string UIName = "Lentille de pluie:: Dégradé"; > = { 0.4 };
+float VigOffset < string UIName = "Lentille de pluie:: Vignette"; float UIStep = 0.001; > = { 0.225 };
+float llight < string UIName = "Lentille de pluie:: Éclairage"; > = { 4.0 };
+float lspec < string UIName = "Lentille de pluie:: Réfraction"; float UIMin = 0.0; float UIMax = 1.0; float UIStep = 0.0001; > = { 0.02 };
+bool rf < string UIName = "Lentille de pluie:: Forcer l'activation"; > = { false };
+
+float4 Test2 < string UIName = "Test2"; string UIWidget = "color"; int UIHidden = 1; > ;
+float4 Test3 < string UIName = "Test3"; string UIWidget = "color"; int UIHidden = 1; > ;
+
+float GTA5linearDepth(float depth)
+{
+	depth = 1.0 - depth;
+	depth = DofProj.w - depth;
+	depth = 1.0 + depth;
+	depth = DofProj.z / depth;
+	return depth;
+}
+
+SamplerState Sampler1
+{
+	Filter = MIN_MAG_MIP_LINEAR;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+SamplerState Sampler3
+{
+	Filter = MIN_MAG_MIP_LINEAR;
+	AddressU = Border;
+	AddressV = Border;
+};
+SamplerComparisonState Sampler4
+{
+	Filter = COMPARISON_MIN_MAG_MIP_POINT;
+	AddressU = Clamp;
+	AddressV = Clamp;
+	ComparisonFunc = EQUAL;
+};
+
+struct VS_INPUT_POST
+{
+	float3 pos	: POSITION;
+	float2 txcoord	: TEXCOORD0;
+};
+struct VS_OUTPUT_POST
+{
+	float4 pos	: SV_POSITION;
+	float2 txcoord0	: TEXCOORD0;
+};
+struct VS_OUTPUT_POSTt
+{
+	float4 pos	: SV_POSITION;
+	float2 txcoord0	: TEXCOORD0;
+	float4 wpos	: TEXCOORD1;
+	nointerpolation float4 txcoord2	: TEXCOORD2;
+	nointerpolation bool txcoord3 : TEXCOORD3;
+	nointerpolation float4 txcoord4 : TEXCOORD4;
+};
+struct VS_OUTPUT_POST0
+{
+	float4 pos	: SV_POSITION;
+	float4 txcoord0	: TEXCOORD0;
+};
+struct VS_OUTPUT_POST1
+{
+	float4 pos	: SV_POSITION;
+	float4 txcoord0	: TEXCOORD0;
+	bool menable : TEXCOORD2;
+};
+struct VS_OUTPUT_POST2
+{
+	float4 pos	: SV_POSITION;
+	float2 txcoord0	: TEXCOORD0;
+	float4 txcoord1[12]	: TEXCOORD1;
+	nointerpolation float4 mult[3] : MULT;
+};
+
+VS_OUTPUT_POST VS_Quad(VS_INPUT_POST IN)
+{
+	VS_OUTPUT_POST OUT;
+	OUT.pos.xyz = IN.pos.xyz;
+	OUT.pos.w = 1.0;
+	OUT.txcoord0.xy = IN.txcoord.xy;
+	return OUT;
+}
+VS_OUTPUT_POSTt VS_Pre(VS_INPUT_POST IN)
+{
+	VS_OUTPUT_POSTt OUT;
+	OUT.pos.xyz = IN.pos.xyz;
+	OUT.pos.w = 1.0;
+	OUT.txcoord0.xy = IN.txcoord.xy;
+
+	float2 timer; timer.y = modf(Timer.x * 8600.0, timer.x);
+	float4 noise = abs(frac(sin(timer.x * float4(25.9796, 156.466, 78.233, 51.9592)) * 43758.5453));
+	float toggle = round(frac(sin(timer.x) * 43758.5453) + 0.22) * 2.0 - 1.0;
+	//float toggle; modf(sin(Timer.x * 8600.0) * 1.067, toggle);
+	float4 pta = Test3;
+	float2 pto = round(ViewInverse3.xy * 0.001) * 1000.0;
+	float2 Pos = (noise.zw * 5400.0 - 2700.0) + pto;
+	float2 lejos = (abs(abs(pto) - abs(Pos)) > 600.0);
+	pta.xy = lejos ? Pos : Pos + 600.0 + 600.0;
+	float4 wpos = mul(pta, WorldViewProj);
+	wpos.xyz /= wpos.w;
+	wpos.xyz = wpos.xyz * float3(0.5, -0.5, -0.5) + float3(0.5, 0.5, 0.5);
+	wpos.xy = IN.txcoord.xy - wpos.xy;
+	wpos.xy = wpos.xy * DofProj.xy * wpos.w;
+	wpos.x *= toggle;
+	OUT.wpos = wpos;
+
+	OUT.txcoord2.xy = int2(abs(noise.xy * 10.0 - 5.0));
+	const float w[16] = { 0.0,0.9,1.0,1.0,1.0,1.0,1.0,1.0,0.38,0.37,0.9,0.9,0.9,0.9,0.9,1.0 };
+	float wday = lerp(w[(int)qWeather.x], w[(int)qWeather.y], qWeather.z);
+	float t = Test2.w ? GameTime : Weather.w;
+	float dn_ray = lerp(7.0, 290.0 * wday, smoothstep(4.9, 5.4, t));
+	OUT.txcoord2.z = lerp(dn_ray, 7.0, smoothstep(21.0, 21.5, t));
+	float dn_bloom = lerp(40.0, 4900.0 * wday, smoothstep(4.9, 5.4, t));
+	OUT.txcoord2.w = lerp(dn_bloom, 40.0, smoothstep(21.0, 21.5, t));
+
+	float2 isWeather = (qWeather.xy == 9) || (qWeather.xy == 15);
+	float tf = 0;
+	OUT.txcoord3 = saturate(tf + (isWeather.x || isWeather.y)) * (1.0 - saturate(ExteriorInterior));
+	OUT.txcoord4.x = saturate(sin(Timer.x * 210000.0));
+	OUT.txcoord4.y = saturate(sin(Timer.x * 65000.0));
+	OUT.txcoord4.z = max(frac(sin(Timer.x * 15000.0) * 43758.5453), 0.4);
+	OUT.txcoord4.w = timer.y * 3.0 - OUT.txcoord4.z;
+
+	return OUT;
+}
+VS_OUTPUT_POST0 VS_0(VS_INPUT_POST IN)
+{
+	VS_OUTPUT_POST0 OUT;
+	OUT.pos.xyz = IN.pos.xyz * float3(rsc.xx, 1) + float3(-(1.0 - rsc), 1.0 - rsc, 0);
+	OUT.pos.w = 1.0;
+	OUT.txcoord0.xy = IN.txcoord.xy;
+	float2 uv = IN.txcoord.xy - MoonScreenPos.xy;
+	uv.y *= ScreenSize.w;
+	OUT.txcoord0.zw = uv;
+	return OUT;
+}
+VS_OUTPUT_POST1 VS_1(VS_INPUT_POST IN)
+{
+	VS_OUTPUT_POST1 OUT;
+	OUT.pos.xyz = IN.pos.xyz;
+	OUT.pos.w = 1.0;
+	OUT.txcoord0.xy = IN.txcoord.xy;
+	float2 uv = IN.txcoord.xy * rsc - MoonScreenPos.xy * rsc;
+	uv.y += ScreenSize.y * rde * rsc;
+	OUT.txcoord0.zw = uv * (1.0 / 16.0);
+	float t = Test2.w ? GameTime : Weather.w;
+	OUT.menable = (MoonScreenPos.z && (t > 20.9 || t < 5.9));
+	return OUT;
+}
+VS_OUTPUT_POST0 VS_2(VS_INPUT_POST IN)
+{
+	VS_OUTPUT_POST0 OUT;
+	OUT.pos.xyz = IN.pos.xyz;
+	OUT.pos.w = 1.0;
+	OUT.txcoord0.xy = IN.txcoord.xy;
+	//			no, extr,clear,clrng,cloud,overcst,smog,foggy,rain,thunder,bliz,neutl,snow,snowli,xmas,hallo
+	const float w[16] = { 0.04, 0.04, 0.07, 0.06, 0.015, 0.04, 0.08, 0.09, 0.4, 0.017, 0.1, 0.04, 0.01, 0.07, 0.4, 0.33 };
+	OUT.txcoord0.z = lerp(w[(int)qWeather.x], w[(int)qWeather.y], qWeather.z);
+	return OUT;
+}
+static const uint2 seed[60] = { 150,183,140,181,148,157,218,190,184,170,212,205,137,188,125,138,129,156,164,198,127,130,152,175,163,111,147,191,117,161,124,197,220,216,106,193,176,143,173,171,209,217,103,204,141,177,159,122,201,207,134,200,211,146,195,105,196,165,107,100,178,219,186,135,101,208,123,144,162,202,115,214,149,153,108,155,168,187,136,133,145,199,110,126,121,180,215,119,172,128,160,112,203,194,139,192,113,182,169,174,154,131,206,104,142,151,116,132,166,120,102,109,179,167,118,158,210,213,114,185 };
+VS_OUTPUT_POST2 VS_RainLens(VS_INPUT_POST IN, uniform uint index)
+{
+	VS_OUTPUT_POST2 OUT;
+	OUT.pos.xyz = IN.pos.xyz;
+	OUT.pos.w = 1.0;
+	OUT.txcoord0.xy = IN.txcoord.xy;
+
+	float2 offset[12];
+	float2 scale[12];
+	float multi[12];
+	float2 focusPoint = float2(0.499, 0.52);//0.5
+	float spd = lerp(0.74, 1.0, saturate(FieldOfView * 0.1 - 5.0));
+	float2 uv = Test2.w ? IN.txcoord.xy * spd + (1.0 - spd) * float2(0.5, 0.19) : IN.txcoord.xy;
+
+	[unroll] for (int i = 0; i < 12; i++)
+	{
+		float anim = Timer.x * seed[i + index].x * lspeed;
+		float2 noise = frac(sin(floor(anim) * 12.9898 + seed[i + index] * 78.233) * 43758.5453);
+
+		float2 coord = noise - focusPoint;
+		float vignt = length(coord);
+		offset[i] = coord / vignt * lerp(VigOffset, float2(1.0, 0.5), vignt * 2.0);
+		offset[i].x *= ScreenSize.w;
+
+		anim = frac(anim);
+		scale[i] = (1.0 + anim * 0.7 + 0.3) * lsize;
+		scale[i].x *= ScreenSize.w;
+		scale[i] *= lerp(1.0, grad, noise.y);
+
+		multi[i] = (1.0 - anim) * lintensity;
+
+		float2 Vec; sincos(seed[i + index].x, Vec.y, Vec.x);
+		OUT.txcoord1[i].xy = mul(float2x2(Vec.x, -Vec.y, Vec.y, Vec.x), (uv - focusPoint - offset[i]) / scale[i]);
+		OUT.txcoord1[i].zw = (float2(i % 4, floor(i * 0.25)) + OUT.txcoord1[i].xy + 0.5) * 0.25;
+	}
+
+	OUT.mult[0] = float4(multi[0], multi[1], multi[2], multi[3]);
+	OUT.mult[1] = float4(multi[4], multi[5], multi[6], multi[7]);
+	OUT.mult[2] = float4(multi[8], multi[9], multi[10], multi[11]);
+
+	return OUT;
+}
+
+float3 distort(float2 uv, float2 offset)
+{
+	float3 color = 0;
+	float3 temp;
+	float2 tempuv = uv - offset * gpca;
+	if (tempuv.x >= 0.0 && tempuv.x <= 1.0 && tempuv.y >= 0.0 && tempuv.y <= 1.0)
+	{
+		temp = TextureOriginal.SampleLevel(Sampler1, tempuv, 0).xyz;
+		temp = (dot(temp, 0.333333) > gpt) ? temp : 0;
+		color.x += temp.x;
+	}
+	if (uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0)
+	{
+		temp = TextureOriginal.SampleLevel(Sampler1, uv, 0).xyz;
+		temp = (dot(temp, 0.333333) > gpt) ? temp : 0;
+		color.y += temp.y;
+	}
+	tempuv = uv + offset * gpca;
+	if (tempuv.x >= 0.0 && tempuv.x <= 1.0 && tempuv.y >= 0.0 && tempuv.y <= 1.0)
+	{
+		temp = TextureOriginal.SampleLevel(Sampler1, tempuv, 0).xyz;
+		temp = (dot(temp, 0.333333) > gpt) ? temp : 0;
+		color.z += temp.z;
+	}
+	return color;
+}
+float4 PS_Pre(VS_OUTPUT_POSTt IN) : SV_Target
+{
+	float4 res = 0.0;
+	float2 uv = IN.wpos.xy * 0.0031;
+
+	[branch] if (IN.txcoord3 && ViewInverse3.z > 0.25 && uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0)
+	{
+		float4 thun = ray.SampleLevel(Sampler3, uv, 0);
+		float ray[5] = { thun, lerp(thun.x, thun.y, IN.txcoord4.x) * IN.txcoord4.y };
+		thun.xyz = ray[(int)IN.txcoord2.x];
+		thun.xyz *= thun.xyz;
+
+		float3 col[5];
+		float vig = smoothstep(0.0, 1.0, pow(distance(IN.wpos.x, 0.5), 3) * 6e-08);
+		col[0] = lerp(float3(0.486, 0.584, 1.0), float3(1.0, 0.672, 0.553), saturate(vig));
+		col[1] = float3(1.0, 0.672, 0.553);
+		col[2] = float3(0.486, 0.584, 1.0);
+		col[3] = float3(0.424, 0.524, 1.0);
+		col[4] = float3(0.425, 0.517, 1.0);
+
+		thun.xyz *= col[(int)IN.txcoord2.y];
+		thun.xyz *= saturate(IN.txcoord4.w - IN.txcoord0.y);
+
+		float depth = GTA5linearDepth(TextureDepth.SampleLevel(Sampler1, IN.txcoord0.xy, 0).x);
+		thun.xyz *= (depth > IN.wpos.w) && (IN.wpos.w > 0.0);
+
+		res.xyz = thun.xyz * IN.txcoord2.w * IN.txcoord4.z;
+		res.w = dot(thun.xyz, 0.333333) * IN.txcoord2.z;
+	}
+
+	[branch] if (gp)
+	{
+		float2 flareuv = (0.5 - IN.txcoord0.xy) * gpfd;
+		float2 flareuv2 = flareuv * 2.0;
+		float2 halouv = normalize(flareuv) * gphw;
+		float3 flare = distort(IN.txcoord0.xy + flareuv, flareuv);
+		flare += distort(IN.txcoord0.xy + flareuv2, flareuv2);
+		flare += distort(IN.txcoord0.xy + halouv, halouv);
+		flare = lerp(dot(flare, float3(0.2126, 0.7152, 0.0722)), flare, gpdesat);
+		flare *= gptint;
+		res.xyz += min(flare * flare * gpi, 4096.0);
+	}
+	return res;
+}
+
+static const float weight[4] = { 0.29675293,0.09442139,0.01037598,0.00025940 };
+static const float offset[4] = { 1.41176471,3.29411765,5.17647059,7.05882353 };
+float4 PS_GaussH(VS_OUTPUT_POST IN, uniform Texture2D inputtex, uniform float srcsize, uniform bool lens) : SV_Target
+{
+	float3 res = inputtex.SampleLevel(Sampler1, IN.txcoord0.xy, 0).xyz * 0.19638062;
+	float2 px = float2(srcsize, 0);
+	[unroll] for (int i = 0; i < 4; i++)
+	{
+		res += inputtex.SampleLevel(Sampler1, IN.txcoord0.xy + offset[i] * px, 0).xyz * weight[i];
+		res += inputtex.SampleLevel(Sampler1, IN.txcoord0.xy - offset[i] * px, 0).xyz * weight[i];
+	}
+	if (lens == true)
+	{
+		res += RenderTargetRGBA64F.SampleLevel(Sampler1, IN.txcoord0.xy, 0).xyz;
+	}
+	return float4(res,1);
+}
+float4 PS_GaussV(VS_OUTPUT_POST IN, uniform Texture2D inputtex, uniform float srcsize) : SV_Target
+{
+	float3 res = inputtex.SampleLevel(Sampler1, IN.txcoord0.xy, 0).xyz * 0.19638062;
+	float2 px = float2(0, srcsize * ScreenSize.z);
+	[unroll] for (int i = 0; i < 4; i++)
+	{
+		res += inputtex.SampleLevel(Sampler1, IN.txcoord0.xy + offset[i] * px, 0).xyz * weight[i];
+		res += inputtex.SampleLevel(Sampler1, IN.txcoord0.xy - offset[i] * px, 0).xyz * weight[i];
+	}
+	return float4(res,1);
+}
+
+float4 PS_BloomMix(VS_OUTPUT_POST IN, float4 v0 : SV_Position0) : SV_Target
+{
+	float noise = noisetex.Load(int3((int2)v0.xy & int2(63, 63), 0)).x * 2.0 - 1.0;
+	float3 res = RenderTarget1024.Sample(Sampler1, IN.txcoord0.xy).xyz * 0.6;
+	res += RenderTarget512.Sample(Sampler1, IN.txcoord0.xy).xyz;
+	res += RenderTarget256.Sample(Sampler1, IN.txcoord0.xy).xyz;
+	res += RenderTarget128.Sample(Sampler1, IN.txcoord0.xy + IN.txcoord0.xy * noise * 0.005).xyz * 1.2;
+	res += RenderTarget64.Sample(Sampler1, IN.txcoord0.xy + IN.txcoord0.xy * noise * 0.015).xyz;
+	res += RenderTarget32.Sample(Sampler1, IN.txcoord0.xy + IN.txcoord0.xy * noise * 0.02).xyz * float3(0.31,0.27,0.48);
+	res *= b;
+	//res *= lerp(b, b * 1.3432836, saturate(ExteriorInterior));
+	return float4(res,1);
+}
+
+float4 PS_mr0(VS_OUTPUT_POST0 IN) : SV_Target
+{
+	float mmask = saturate(1.0 - pow(dot(IN.txcoord0.zw, IN.txcoord0.zw), rwi));
+	mmask *= saturate(pow(dot(IN.txcoord0.zw, IN.txcoord0.zw), rwi * 1.45) * 1.9);
+	return mmask * TextureDepth.SampleCmpLevelZero(Sampler4, IN.txcoord0.xy, 1).x;
+}
+float4 PS_mr1(VS_OUTPUT_POST1 IN, float4 v0 : SV_Position0) : SV_Target
+{
+	float4 res = float4(TextureColor.Sample(Sampler1, IN.txcoord0.xy).xyz, 0);
+	float noise = noisetex.Load(int3((int2)v0.xy & int2(63, 63), 0)).x * 2.0 - 1.0;
+	float2 uv = IN.txcoord0.xy * rsc + IN.txcoord0.zw * noise;
+	if (IN.menable)
+	{
+		[unroll] for (int i = 0; i < 16; i++)
+		{
+			uv -= IN.txcoord0.zw;
+			res.w += RenderTargetRGBA32.SampleLevel(Sampler1, uv, 0).x;
+		}
+	}
+	return res;
+}
+float4 PS_mr2(VS_OUTPUT_POST0 IN) : SV_Target
+{
+	float4 res = TextureColor.Sample(Sampler1, IN.txcoord0.xy);
+	float3 samp = res.w;
+	//samp.x = TextureColor.Sample(Sampler1, IN.txcoord0.xy, int2(-1,-1)).w;
+	//samp.z = TextureColor.Sample(Sampler1, IN.txcoord0.xy, int2(1,1)).w;
+	samp.x = TextureColor.Sample(Sampler1, IN.txcoord0.xy - rcpFrame * rca).w;
+	samp.z = TextureColor.Sample(Sampler1, IN.txcoord0.xy + rcpFrame * rca).w;
+	samp *= rin;
+	samp *= samp;
+	samp *= samp;
+	res.xyz += samp * IN.txcoord0.z * rcol;
+	return res;
+}
+
+float4 PS_Post0(VS_OUTPUT_POST IN) : SV_Target
+{
+	float3 res = TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(1,0)).xyz;
+	res += TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(-1,0)).xyz;
+	res += TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(0,1)).xyz;
+	res += TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(0,-1)).xyz;
+	res *= 0.25;
+	return float4(res,1);
+}
+float4 PS_Post1(VS_OUTPUT_POST IN) : SV_Target
+{
+	float3 res = TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(1,1)).xyz;
+	res += TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(1,-1)).xyz;
+	res += TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(-1,1)).xyz;
+	res += TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0, int2(-1,-1)).xyz;
+	res *= 0.25;
+	float fx = RenderTargetRGBA64F.SampleLevel(Sampler1, IN.txcoord0.xy, 0).w;
+	//res = res * (1.0 - fx) + fx;
+	res += fx;
+	return float4(res,0);
+}
+
+float4 PS_RainLens0(VS_OUTPUT_POST2 IN) : SV_Target
+{
+	float4 res = TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0);
+
+	const float multi[12] = { IN.mult[0],IN.mult[1],IN.mult[2] };
+	[unroll] for (int i = 0; i < 12; i++)
+	{
+		float lens = shape.SampleLevel(Sampler1, IN.txcoord1[i].zw, 0).x;
+		bool2 k1 = (0.5 >= abs(IN.txcoord1[i].xy));
+		res.w += lens * k1.x * k1.y * multi[i];
+	}
+	return res;
+}
+float4 PS_RainLens1(VS_OUTPUT_POST IN, float4 v0 : SV_Position0) : SV_Target
+{
+	float4 res = TextureColor.SampleLevel(Sampler1, IN.txcoord0.xy, 0);
+
+	if ((v0.x < 1) && (v0.y < 3))res.w = rf;
+	if ((v0.x < 1) && (v0.y < 2))res.w = llight;
+	if ((v0.x < 1) && (v0.y < 1))res.w = lspec;
+
+	return res;
+}
+
+technique11 Aaron < string UIName = "AaronX Bloom"; string RenderTarget = "RenderTargetRGBA64F"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Pre()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Pre()));
+	}
+}
+technique11 Aaron1
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(TextureDownsampled, 0.000976562, 1)));
+	}
+}
+technique11 Aaron2 < string RenderTarget = "RenderTarget1024"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.000976562)));
+	}
+}
+technique11 Aaron3
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget1024, 0.001953125, 0)));
+	}
+}
+technique11 Aaron4 < string RenderTarget = "RenderTarget512"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.001953125)));
+	}
+}
+technique11 Aaron5
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget512, 0.00390625, 0)));
+	}
+}
+technique11 Aaron6 < string RenderTarget = "RenderTarget256"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.00390625)));
+	}
+}
+technique11 Aaron7
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget256, 0.0078125, 0)));
+	}
+}
+technique11 Aaron8 < string RenderTarget = "RenderTarget128"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.0078125)));
+	}
+}
+technique11 Aaron9
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget128, 0.015625, 0)));
+	}
+}
+technique11 Aaron10 < string RenderTarget = "RenderTarget64"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.015625)));
+	}
+}
+technique11 Aaron11
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget64, 0.03125, 0)));
+	}
+}
+technique11 Aaron12 < string RenderTarget = "RenderTarget32"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.03125)));
+	}
+}
+technique11 Aaron13
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_BloomMix()));
+	}
+}
+technique11 Aaron14 < string RenderTarget = "RenderTargetRGBA32"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_0()));
+		SetPixelShader(CompileShader(ps_5_0, PS_mr0()));
+	}
+}
+technique11 Aaron15
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_1()));
+		SetPixelShader(CompileShader(ps_5_0, PS_mr1()));
+	}
+}
+technique11 Aaron16
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_2()));
+		SetPixelShader(CompileShader(ps_5_0, PS_mr2()));
+	}
+}
+technique11 Aaron17
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Post0()));
+	}
+}
+technique11 Aaron18
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Post1()));
+	}
+}
+
+technique11 lAaron < string UIName = "AaronX Bloom+RainLens"; string RenderTarget = "RenderTargetRGBA64F"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Pre()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Pre()));
+	}
+}
+technique11 lAaron1
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(TextureDownsampled, 0.000976562, 1)));
+	}
+}
+technique11 lAaron2 < string RenderTarget = "RenderTarget1024"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.000976562)));
+	}
+}
+technique11 lAaron3
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget1024, 0.001953125, 0)));
+	}
+}
+technique11 lAaron4 < string RenderTarget = "RenderTarget512"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.001953125)));
+	}
+}
+technique11 lAaron5
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget512, 0.00390625, 0)));
+	}
+}
+technique11 lAaron6 < string RenderTarget = "RenderTarget256"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.00390625)));
+	}
+}
+technique11 lAaron7
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget256, 0.0078125, 0)));
+	}
+}
+technique11 lAaron8 < string RenderTarget = "RenderTarget128"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.0078125)));
+	}
+}
+technique11 lAaron9
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget128, 0.015625, 0)));
+	}
+}
+technique11 lAaron10 < string RenderTarget = "RenderTarget64"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.015625)));
+	}
+}
+technique11 lAaron11
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussH(RenderTarget64, 0.03125, 0)));
+	}
+}
+technique11 lAaron12 < string RenderTarget = "RenderTarget32"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_GaussV(TextureColor, 0.03125)));
+	}
+}
+technique11 lAaron13
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_BloomMix()));
+	}
+}
+technique11 lAaron14 < string RenderTarget = "RenderTargetRGBA32"; >
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_0()));
+		SetPixelShader(CompileShader(ps_5_0, PS_mr0()));
+	}
+}
+technique11 lAaron15
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_1()));
+		SetPixelShader(CompileShader(ps_5_0, PS_mr1()));
+	}
+}
+technique11 lAaron16
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_2()));
+		SetPixelShader(CompileShader(ps_5_0, PS_mr2()));
+	}
+}
+technique11 lAaron17
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Post0()));
+	}
+}
+technique11 lAaron18
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_Post1()));
+	}
+}
+technique11 lAaron19
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_RainLens(0)));
+		SetPixelShader(CompileShader(ps_5_0, PS_RainLens0()));
+	}
+}
+technique11 lAaron20
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_RainLens(12)));
+		SetPixelShader(CompileShader(ps_5_0, PS_RainLens0()));
+	}
+}
+technique11 lAaron21
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_RainLens(24)));
+		SetPixelShader(CompileShader(ps_5_0, PS_RainLens0()));
+	}
+}
+technique11 lAaron22
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_RainLens(36)));
+		SetPixelShader(CompileShader(ps_5_0, PS_RainLens0()));
+	}
+}
+technique11 lAaron23
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_RainLens(48)));
+		SetPixelShader(CompileShader(ps_5_0, PS_RainLens0()));
+	}
+}
+technique11 lAaron24
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+		SetPixelShader(CompileShader(ps_5_0, PS_RainLens1()));
+	}
+}
+
+//NEW MODERN BLOOM
+float4 PS_ModernBloom(VS_OUTPUT_POST IN) : SV_Target
+{
+    float3 res = 0;
+    float2 uv = IN.txcoord0.xy;
+    float2 texelSize = rcpFrame.xy;
+
+    for(int x = -4; x <= 4; x++)
+    {
+        for(int y = -4; y <= 4; y++)
+        {
+            res += TextureColor.SampleLevel(Sampler1, uv + float2(x, y) * texelSize, 0).xyz;
+        }
+    }
+
+    return float4(res / 81.0, 1.0);
+}
+
+technique11 ModernBloom < string UIName = "Bloom moderne"; >
+{
+    pass p0
+    {
+        SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+        SetPixelShader(CompileShader(ps_5_0, PS_ModernBloom()));
+    }
+}
+
+SamplerState SamplerNoise
+{
+	Filter = MIN_MAG_MIP_LINEAR;
+	AddressU = Wrap;
+	AddressV = Wrap;
+};
+
+float4 PS_RDR2Clouds(VS_OUTPUT_POST IN) : SV_Target
+{
+    float4 color = TextureColor.Sample(Sampler1, IN.txcoord0.xy);
+
+    const float density[16] = { CloudDensity_ExtraSunny, 0, CloudDensity_Clear, CloudDensity_Clearing, CloudDensity_Clouds, 0, 0, 0, CloudDensity_Rain, CloudDensity_Thunder, 0, CloudDensity_Neutral, 0, 0, 0, 0 };
+    const float noise[16] = { CloudNoise_ExtraSunny, 0, CloudNoise_Clear, CloudNoise_Clearing, CloudNoise_Clouds, 0, 0, 0, CloudNoise_Rain, CloudNoise_Thunder, 0, CloudNoise_Neutral, 0, 0, 0, 0 };
+    const float speed[16] = { CloudSpeed_ExtraSunny, 0, CloudSpeed_Clear, CloudSpeed_Clearing, CloudSpeed_Clouds, 0, 0, 0, CloudSpeed_Rain, CloudSpeed_Thunder, 0, CloudSpeed_Neutral, 0, 0, 0, 0 };
+
+    float cloudDensity = lerp(density[(int)qWeather.x], density[(int)qWeather.y], qWeather.z);
+    float cloudNoise = lerp(noise[(int)qWeather.x], noise[(int)qWeather.y], qWeather.z);
+    float cloudSpeed = lerp(speed[(int)qWeather.x], speed[(int)qWeather.y], qWeather.z);
+
+
+    if (cloudDensity > 0.0)
+    {
+        // Apply cloud density
+        color.a *= cloudDensity;
+
+        // Apply animated noise (with speed)
+        float2 noise_uv = IN.txcoord0.xy * ScreenSize.xy / 256.0;
+        noise_uv.y += Timer.x * cloudSpeed * 0.01;
+        float noiseVal = noisetex.Sample(SamplerNoise, noise_uv).r;
+
+        // Combine with noise
+        color.a *= 1.0 - (1.0 - noiseVal) * cloudNoise;
+    }
+
+    return color;
+}
+
+technique11 RDR2Clouds < string UIName = "Nuages RDR2"; >
+{
+    pass p0
+    {
+        SetVertexShader(CompileShader(vs_5_0, VS_Quad()));
+        SetPixelShader(CompileShader(ps_5_0, PS_RDR2Clouds()));
+    }
+}
