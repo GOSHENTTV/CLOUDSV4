@@ -1,0 +1,913 @@
+//++++++++++++++++++++++++++++++++++++
+// SHADERS FROM RED DEAD REDEMPTION II / DO NOT SHARE OR REDISTRIBUATE
+// Original code by Rockstar Games
+// Code adapt by CX and BLASE
+//++++++++++++++++++++++++++++++++++++
+vs_5_0
+dcl_globalFlags refactoringAllowed
+dcl_constantbuffer cb2[14], immediateIndexed
+dcl_constantbuffer cb5[87], immediateIndexed
+dcl_constantbuffer cb1[16], immediateIndexed
+dcl_constantbuffer cb3[55], immediateIndexed
+dcl_sampler s1, mode_default
+dcl_resource_texture2d (float,float,float,float) t1
+dcl_input v0.xy
+dcl_output_siv o0.xyzw, position
+dcl_output o1.xyzw
+dcl_output o2.x
+dcl_output o4.xyzw
+dcl_output o5.xyzw
+dcl_output o6.xyzw
+dcl_output o7.xyzw
+dcl_output o8.xyzw
+dcl_output o9.xyzw
+dcl_output o10.xyzw
+dcl_output o11.xyzw
+dcl_output o12.xyzw
+dcl_output o13.xyzw
+dcl_output o14.xyzw
+dcl_output o15.xyzw
+dcl_temps 18
+mul r0.xy, v0.xyxx, cb5[84].xyxx
+mad o0.xy, r0.xyxx, cb5[82].xyxx, cb5[82].zwzz
+mad o1.xy, v0.xyxx, cb5[83].xyxx, cb5[83].zwzz
+sample_l_indexable(texture2d)(float,float,float,float) r0.xy, l(0.000000e+000, 0.000000e+000, 0.000000e+000, 0.000000e+000), t1.xyzw, s1, l(0.000000e+000)
+div o1.w, l(1.000000e+000, 1.000000e+000, 1.000000e+000, 1.000000e+000), r0.x
+mul r1.xyz, cb1[10].wyzw, cb1[11].zwyz
+mul r2.xyz, cb1[10].zwxz, cb1[11].wxzw
+mul r3.xyz, cb1[10].wxyw, cb1[11].ywxy
+mul r4.xyz, cb1[10].yzxy, cb1[11].zxyz
+mad r1.xyz, cb1[10].zwyz, cb1[11].wyzw, -r1.xyzx
+mad r2.xyz, cb1[10].wxzw, cb1[11].zwxz, -r2.xyzx
+mad r3.xyz, cb1[10].ywxy, cb1[11].wxyw, -r3.xyzx
+mad r4.xyz, cb1[10].zxyz, cb1[11].yzxy, -r4.xyzx
+dp3 r1.x, r1.xyzx, cb1[9].yzwy
+dp3 r1.y, r2.xyzx, cb1[9].xzwx
+dp3 r1.z, r3.xyzx, cb1[9].xywx
+dp3 r1.w, r4.xyzx, cb1[9].xyzx
+dp4 r0.z, r1.xyzw, cb1[8].xyzw
+ne r0.w, r0.z, l(0.000000e+000)
+if_nz r0.w
+  rcp r1.x, r0.z
+  mul r1.yz, cb1[10].wwww, cb1[11].zzyz
+  mad r1.yzw, cb1[10].zzyz, cb1[11].wwww, -r1.yyzy
+  mul r1.z, r1.z, cb1[9].z
+  mad r1.y, cb1[9].y, r1.y, -r1.z
+  mul r2.xy, cb1[10].zwzz, cb1[11].yxyy
+  mad r2.xy, cb1[10].yxyy, cb1[11].zwzz, -r2.xyxx
+  mul r1.z, r2.y, cb1[9].z
+  mad r1.y, cb1[9].w, r2.x, r1.y
+  mul o4.x, r1.y, r1.x
+  mad r1.y, cb1[9].x, r1.w, -r1.z
+  mul r1.z, cb1[10].z, cb1[11].x
+  mad r1.z, cb1[10].x, cb1[11].z, -r1.z
+  mad r1.y, cb1[9].w, r1.z, r1.y
+  mul o5.x, r1.y, -r1.x
+else 
+  mov o4.x, l(0)
+  mov o5.x, l(0)
+endif 
+mov o7.x, -cb1[4].z
+if_nz r0.w
+  rcp r1.x, r0.z
+  mul r1.yz, cb1[10].wwww, cb1[11].zzyz
+  mad r1.yzw, cb1[10].zzyz, cb1[11].wwww, -r1.yyzy
+  mul r1.z, r1.z, cb1[8].z
+  mad r1.y, cb1[8].y, r1.y, -r1.z
+  mul r2.xy, cb1[10].zwzz, cb1[11].yxyy
+  mad r2.xy, cb1[10].yxyy, cb1[11].zwzz, -r2.xyxx
+  mul r1.z, r2.y, cb1[8].z
+  mad r1.y, cb1[8].w, r2.x, r1.y
+  mul o4.y, r1.y, -r1.x
+  mad r1.y, cb1[8].x, r1.w, -r1.z
+  mul r1.z, cb1[10].z, cb1[11].x
+  mad r1.z, cb1[10].x, cb1[11].z, -r1.z
+  mad r1.y, cb1[8].w, r1.z, r1.y
+  mul o5.y, r1.y, r1.x
+else 
+  mov o4.y, l(0)
+  mov o5.y, l(0)
+endif 
+mov o7.y, -cb1[5].z
+if_nz r0.w
+  rcp r1.x, r0.z
+  mul r1.yz, cb1[9].wwww, cb1[11].zzyz
+  mad r1.yzw, cb1[9].zzyz, cb1[11].wwww, -r1.yyzy
+  mul r1.z, r1.z, cb1[8].z
+  mad r1.y, cb1[8].y, r1.y, -r1.z
+  mul r2.xy, cb1[9].zwzz, cb1[11].yxyy
+  mad r2.xy, cb1[9].yxyy, cb1[11].zwzz, -r2.xyxx
+  mul r1.z, r2.y, cb1[8].z
+  mad r1.y, cb1[8].w, r2.x, r1.y
+  mul o4.z, r1.y, r1.x
+  mad r1.y, cb1[8].x, r1.w, -r1.z
+  mul r1.z, cb1[9].z, cb1[11].x
+  mad r1.z, cb1[9].x, cb1[11].z, -r1.z
+  mad r1.y, cb1[8].w, r1.z, r1.y
+  mul o5.z, r1.y, -r1.x
+else 
+  mov o4.z, l(0)
+  mov o5.z, l(0)
+endif 
+mov o7.z, -cb1[6].z
+if_nz r0.w
+  rcp r0.z, r0.z
+  mul r1.xy, cb1[9].wwww, cb1[10].zyzz
+  mad r1.xyzw, cb1[9].zyzy, cb1[10].wwww, -r1.xyxy
+  mul r0.w, r1.y, cb1[8].z
+  mad r0.w, cb1[8].y, r1.x, -r0.w
+  mul r1.xy, cb1[9].zwzz, cb1[10].yxyy
+  mad r2.xyzw, cb1[9].yxxy, cb1[10].zwwz, -r1.xyyx
+  mul r1.xy, r2.yzyy, cb1[8].zyzz
+  mad r0.w, cb1[8].w, r2.x, r0.w
+  mul o4.w, r0.w, -r0.z
+  mad r1.xy, cb1[8].xxxx, r1.zwzz, -r1.xyxx
+  mul r1.zw, cb1[9].zzzy, cb1[10].xxxx
+  mad r3.xyzw, cb1[9].xxxx, cb1[10].zyzy, -r1.zwzw
+  mul r0.w, r3.z, cb1[8].y
+  mad r1.xy, cb1[8].wwww, r3.xyxx, r1.xyxx
+  mul o5.w, r0.z, r1.x
+  mul r1.x, -r0.z, r1.y
+  mad r0.w, cb1[8].x, r2.w, -r0.w
+  mad r0.w, cb1[8].z, r3.w, r0.w
+  mul o7.w, r0.w, r0.z
+else 
+  mov o4.w, l(0)
+  mov o5.w, l(0)
+  mov r1.x, l(0)
+  mov o7.w, l(0)
+endif 
+mad r0.z, cb3[53].z, l(5.895892e-001), l(5.000000e-001)
+lt r0.w, l(0.000000e+000), cb3[53].x
+lt r1.z, cb3[53].x, l(0.000000e+000)
+iadd r0.w, -r0.w, r1.z
+itof r0.w, r0.w
+mul r1.z, r0.w, r0.z
+mul_sat r1.w, r1.z, l(5.869544e+001)
+mad r2.x, r1.w, l(-2.000000e+000), l(3.000000e+000)
+mul r1.w, r1.w, r1.w
+mul r2.y, r1.w, r2.x
+mad r3.xyzw, r0.zzzz, r0.wwww, l(-1.703710e-002, -6.698730e-002, -1.464466e-001, -2.500000e-001)
+mul_sat r3.xyzw, r3.xyzw, l(2.001994e+001, 1.258506e+001, 9.656854e+000, 8.292521e+000)
+mad r4.xyzw, r3.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r3.xyzw, r3.xyzw, r3.xyzw
+mul r3.xyzw, r3.xyzw, r4.xyzw
+mad r4.xyzw, r0.zzzz, r0.wwww, l(-3.705906e-001, -5.000000e-001, -6.112606e-001, -7.169419e-001)
+mul_sat r4.xyzw, r4.xyzw, l(7.727414e+000, 8.987908e+000, 9.462412e+000, 1.054820e+001)
+mad r5.xyzw, r4.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r4.xyzw, r4.xyzw, r4.xyzw
+mul r4.xyzw, r4.xyzw, r5.xyzw
+mad r5.xyzw, r0.zzzz, r0.wwww, l(-8.117448e-001, -8.909158e-001, -9.504845e-001, 1.000000e+000)
+mul_sat r5.xyzw, r5.xyzw, l(1.263089e+001, 1.678734e+001, 2.704201e+001, 7.976957e+001)
+mad r6.xyzw, r5.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r5.xyzw, r5.xyzw, r5.xyzw
+add r2.z, |r1.z|, l(-9.874640e-001)
+mul_sat r2.z, r2.z, l(7.977033e+001)
+mad r2.w, r2.z, l(-2.000000e+000), l(3.000000e+000)
+mul r2.z, r2.z, r2.z
+mul r2.z, r2.z, r2.w
+mul r5.xyz, r5.xyzx, r6.xyzx
+mad r7.xyzw, r0.zzzz, r0.wwww, l(9.874639e-001, 9.504844e-001, 8.909157e-001, 8.117448e-001)
+mul_sat r7.xyzw, r7.xyzw, l(2.704201e+001, 1.678734e+001, 1.263091e+001, 1.054818e+001)
+mad r8.xyzw, r7.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r7.xyzw, r7.xyzw, r7.xyzw
+mul r7.xyzw, r7.xyzw, r8.xyzw
+mad r8.xyzw, r0.zzzz, r0.wwww, l(7.169417e-001, 6.112604e-001, 5.000000e-001, 3.086582e-001)
+mul_sat r8.xyzw, r8.xyzw, l(9.462412e+000, 8.987923e+000, 5.226250e+000, 6.164787e+000)
+mad r9.xyzw, r8.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r8.xyzw, r8.xyzw, r8.xyzw
+mul r8.xyzw, r8.xyzw, r9.xyzw
+mad r0.zw, r0.zzzz, r0.wwww, l(0.000000e+000, 0.000000e+000, 1.464466e-001, 3.806020e-002)
+mul_sat r0.zw, r0.zzzw, l(0.000000e+000, 0.000000e+000, 9.226250e+000, 2.627417e+001)
+mad r6.xy, r0.zwzz, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
+mul r0.zw, r0.zzzw, r0.zzzw
+mul r0.zw, r0.zzzw, r6.xxxy
+lt r1.z, l(0.000000e+000), r1.z
+mad r1.w, -r2.x, r1.w, l(2.000000e+000)
+mad r1.w, r3.x, r1.w, r2.y
+add r2.x, -r1.w, l(3.000000e+000)
+mad r1.w, r3.y, r2.x, r1.w
+add r2.x, -r1.w, l(4.000000e+000)
+mad r1.w, r3.z, r2.x, r1.w
+add r2.x, -r1.w, l(5.000000e+000)
+mad r1.w, r3.w, r2.x, r1.w
+add r2.x, -r1.w, l(6.000000e+000)
+mad r1.w, r4.x, r2.x, r1.w
+add r2.x, -r1.w, l(7.000000e+000)
+mad r1.w, r4.y, r2.x, r1.w
+add r2.x, -r1.w, l(8.000000e+000)
+mad r1.w, r4.z, r2.x, r1.w
+add r2.x, -r1.w, l(9.000000e+000)
+mad r1.w, r4.w, r2.x, r1.w
+add r2.x, -r1.w, l(1.000000e+001)
+mad r1.w, r5.x, r2.x, r1.w
+add r2.x, -r1.w, l(1.100000e+001)
+mad r1.w, r5.y, r2.x, r1.w
+add r2.x, -r1.w, l(1.200000e+001)
+mad r1.w, r5.z, r2.x, r1.w
+add r2.x, -r1.w, l(1.300000e+001)
+mad r1.w, r2.z, r2.x, r1.w
+mad r2.x, r6.w, r5.w, l(1.300000e+001)
+add r2.y, -r2.x, l(1.500000e+001)
+mad r2.x, r7.x, r2.y, r2.x
+add r2.y, -r2.x, l(1.600000e+001)
+mad r2.x, r7.y, r2.y, r2.x
+add r2.y, -r2.x, l(1.700000e+001)
+mad r2.x, r7.z, r2.y, r2.x
+add r2.y, -r2.x, l(1.800000e+001)
+mad r2.x, r7.w, r2.y, r2.x
+add r2.y, -r2.x, l(1.900000e+001)
+mad r2.x, r8.x, r2.y, r2.x
+add r2.y, -r2.x, l(2.000000e+001)
+mad r2.x, r8.y, r2.y, r2.x
+add r2.y, -r2.x, l(2.100000e+001)
+mad r2.x, r8.z, r2.y, r2.x
+add r2.y, -r2.x, l(2.200000e+001)
+mad r2.x, r8.w, r2.y, r2.x
+add r2.y, -r2.x, l(2.300000e+001)
+mad r0.z, r0.z, r2.y, r2.x
+add r2.x, -r0.z, l(2.400000e+001)
+mad r0.z, r0.w, r2.x, r0.z
+lt r0.w, l(2.400000e+001), r0.z
+movc r0.z, r0.w, l(0), r0.z
+movc r0.z, r1.z, r1.w, r0.z
+add r2.xyzw, r0.zzzz, l(-6.000000e+000, -4.600000e+000, -5.100000e+000, -1.200000e+001)
+mul_sat r3.xyzw, r2.yzxw, l(1.666667e+000, 1.111111e+000, 1.666667e-001, 1.666667e-001)
+mad r4.xyzw, r3.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r3.xyzw, r3.xyzw, r3.xyzw
+mov_sat r2.x, r2.x
+mad r0.w, r2.x, l(-2.000000e+000), l(3.000000e+000)
+mul r1.z, r2.x, r2.x
+mul r0.w, r0.w, r1.z
+mul r3.xyzw, r3.xyzw, r4.xyzw
+add r4.xyzw, r0.zzzz, l(-1.900000e+001, -2.020000e+001, -2.090000e+001, -1.800000e+001)
+mov_sat r1.zw, r4.wwwx
+mad r2.xy, r1.zwzz, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
+mul r1.zw, r1.zzzw, r1.zzzw
+mul r1.zw, r1.zzzw, r2.xxxy
+mul_sat r4.xyzw, r4.xyzw, l(8.333328e-001, 1.428574e+000, 1.111112e+000, 5.000000e-001)
+mad r5.xyzw, r4.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r4.xyzw, r4.xyzw, r4.xyzw
+mul r4.xyzw, r4.xyzw, r5.xyzw
+mul r2.x, r3.x, l(-4.000000e-003)
+mad r5.xyz, r3.xxxx, l(2.648486e-003, 2.553992e-003, 2.876000e-004, 0.000000e+000), l(3.951400e-005, 5.000800e-005, 8.200000e-005, 0.000000e+000)
+add r6.xyz, -r5.xyzx, l(9.391250e-001, 9.075000e-001, 1.306250e+000, 0.000000e+000)
+mad r5.xyz, r3.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(2.004750e+000, 1.904513e+000, 3.066525e+000, 0.000000e+000)
+mad r5.xyz, r0.wwww, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(3.130380e+000, 4.971780e+000, 9.943560e+000, 0.000000e+000)
+mad r5.xyz, r3.zzzz, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(3.967920e+000, 5.488560e+000, 8.719920e+000, 0.000000e+000)
+mad r5.xyz, r3.wwww, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(1.416800e+000, 1.355200e+000, 1.724800e+000, 0.000000e+000)
+mad r5.xyz, r1.zzzz, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(4.900000e-001, 3.100000e-001, 6.061000e-001, 0.000000e+000)
+mad r5.xyz, r4.xxxx, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(-6.000000e-003, -6.000000e-003, -6.000000e-003, 0.000000e+000)
+mad r5.xyz, r4.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(3.951400e-005, 5.000800e-005, 8.200000e-005, 0.000000e+000)
+mad r5.xyz, r4.zzzz, r6.xyzx, r5.xyzx
+mad r6.xyz, r3.xxxx, l(-2.028224e-003, -2.035720e-003, -2.058320e-003, 0.000000e+000), l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
+add r7.xyz, -r6.xyzx, l(3.247200e-001, 2.934360e-001, 4.847040e-001, 0.000000e+000)
+mad r6.xyz, r3.yyyy, r7.xyzx, r6.xyzx
+add r7.xyz, -r6.xyzx, l(6.965244e-001, 6.453700e-001, 1.065680e+000, 0.000000e+000)
+mad r6.xyz, r0.wwww, r7.xyzx, r6.xyzx
+add r7.xyz, -r6.xyzx, l(1.163591e+000, 2.076789e+000, 3.950000e+000, 0.000000e+000)
+mad r6.xyz, r3.zzzz, r7.xyzx, r6.xyzx
+add r7.xyz, -r6.xyzx, l(1.651404e+000, 2.481160e+000, 4.711014e+000, 0.000000e+000)
+mad r6.xyz, r3.wwww, r7.xyzx, r6.xyzx
+add r7.xyz, -r6.xyzx, l(1.035857e+000, 8.783280e-001, 1.178377e+000, 0.000000e+000)
+mad r6.xyz, r1.zzzz, r7.xyzx, r6.xyzx
+add r7.xyz, -r6.xyzx, l(1.090000e+000, 1.112650e+000, 1.615988e+000, 0.000000e+000)
+mad r6.xyz, r4.xxxx, r7.xyzx, r6.xyzx
+add r7.xyz, -r6.xyzx, l(-6.000000e-003, -6.000000e-003, -6.000000e-003, 0.000000e+000)
+mad r6.xyz, r4.yyyy, r7.xyzx, r6.xyzx
+add r7.xyz, -r6.xyzx, l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
+mad r6.xyz, r4.zzzz, r7.xyzx, r6.xyzx
+mad r7.xyz, r3.xxxx, l(-8.028224e-003, -8.035720e-003, -8.058321e-003, 0.000000e+000), l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
+add r8.xyz, -r7.xyzx, l(2.421619e-001, 2.212056e-001, 3.633830e-001, 0.000000e+000)
+mad r7.xyz, r3.yyyy, r8.xyzx, r7.xyzx
+add r8.xyz, -r7.xyzx, l(7.799220e-001, 7.335900e-001, 1.193280e+000, 0.000000e+000)
+mad r7.xyz, r0.wwww, r8.xyzx, r7.xyzx
+add r8.xyz, -r7.xyzx, l(8.800000e-001, 1.490000e+000, 2.959000e+000, 0.000000e+000)
+mad r7.xyz, r3.zzzz, r8.xyzx, r7.xyzx
+add r8.xyz, -r7.xyzx, l(2.100000e+000, 2.923000e+000, 5.043885e+000, 0.000000e+000)
+mad r7.xyz, r3.wwww, r8.xyzx, r7.xyzx
+add r8.xyz, -r7.xyzx, l(8.250000e-001, 7.206566e-001, 1.141998e+000, 0.000000e+000)
+mad r7.xyz, r1.zzzz, r8.xyzx, r7.xyzx
+add r8.xyz, -r7.xyzx, l(7.700000e-001, 6.513100e-001, 9.459450e-001, 0.000000e+000)
+mad r7.xyz, r4.xxxx, r8.xyzx, r7.xyzx
+add r8.xyz, -r7.xyzx, l(-5.500000e-003, -5.500000e-003, -5.500000e-003, 0.000000e+000)
+mad r7.xyz, r4.yyyy, r8.xyzx, r7.xyzx
+add r8.xyz, -r7.xyzx, l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
+mad r7.xyz, r4.zzzz, r8.xyzx, r7.xyzx
+mad r8.xyz, r3.xxxx, l(-9.019757e-003, -9.025004e-003, -9.040823e-003, 0.000000e+000), l(1.975680e-005, 2.500400e-005, 4.082400e-005, 0.000000e+000)
+add r9.xyz, -r8.xyzx, l(2.421619e-001, 2.212056e-001, 3.633800e-001, 0.000000e+000)
+mad r8.xyz, r3.yyyy, r9.xyzx, r8.xyzx
+add r9.xyz, -r8.xyzx, l(1.621500e+000, 1.576000e+000, 2.155200e+000, 0.000000e+000)
+mad r8.xyz, r0.wwww, r9.xyzx, r8.xyzx
+add r9.xyz, -r8.xyzx, l(1.964930e+000, 3.392445e+000, 7.710870e+000, 0.000000e+000)
+mad r8.xyz, r3.zzzz, r9.xyzx, r8.xyzx
+add r9.xyz, -r8.xyzx, l(2.560880e+000, 3.412600e+000, 6.328300e+000, 0.000000e+000)
+mad r8.xyz, r3.wwww, r9.xyzx, r8.xyzx
+add r9.xyz, -r8.xyzx, l(1.707700e+000, 1.640000e+000, 2.620000e+000, 0.000000e+000)
+mad r8.xyz, r1.zzzz, r9.xyzx, r8.xyzx
+add r9.xyz, -r8.xyzx, l(1.194310e+000, 1.036040e+000, 1.436400e+000, 0.000000e+000)
+mad r8.xyz, r4.xxxx, r9.xyzx, r8.xyzx
+add r9.xyz, -r8.xyzx, l(3.000000e-003, 0.000000e+000, 6.000000e-003, 0.000000e+000)
+mad r8.xyz, r4.yyyy, r9.xyzx, r8.xyzx
+add r9.xyz, -r8.xyzx, l(1.975680e-005, 2.500400e-005, 4.082400e-005, 0.000000e+000)
+mad r8.xyz, r4.zzzz, r9.xyzx, r8.xyzx
+mad r9.xyz, r3.xxxx, l(9.788320e-004, 9.732100e-004, 9.591760e-004, 0.000000e+000), l(2.116800e-005, 2.679000e-005, 4.082400e-005, 0.000000e+000)
+add r10.xyz, -r9.xyzx, l(2.160000e-001, 2.052000e-001, 3.304800e-001, 0.000000e+000)
+mad r9.xyz, r3.yyyy, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(6.742400e-001, 7.817600e-001, 1.284500e+000, 0.000000e+000)
+mad r9.xyz, r0.wwww, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(8.721000e-001, 1.759500e+000, 3.961360e+000, 0.000000e+000)
+mad r9.xyz, r3.zzzz, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(1.615000e+000, 2.659000e+000, 4.585000e+000, 0.000000e+000)
+mad r9.xyz, r3.wwww, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(1.800000e+000, 1.861200e+000, 2.580000e+000, 0.000000e+000)
+mad r9.xyz, r1.zzzz, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(9.135000e-001, 8.883000e-001, 1.228500e+000, 0.000000e+000)
+mad r9.xyz, r4.xxxx, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(-4.000000e-003, -4.000000e-003, -4.000000e-003, 0.000000e+000)
+mad r9.xyz, r4.yyyy, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(2.116800e-005, 2.679000e-005, 4.082400e-005, 0.000000e+000)
+mad r9.xyz, r4.zzzz, r10.xyzx, r9.xyzx
+mad r10.xyz, r3.xxxx, l(-4.028224e-003, -4.035720e-003, -4.058320e-003, 0.000000e+000), l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
+add r11.xyz, -r10.xyzx, l(1.646568e-001, 1.565256e-001, 2.520672e-001, 0.000000e+000)
+mad r10.xyz, r3.yyyy, r11.xyzx, r10.xyzx
+add r11.xyz, -r10.xyzx, l(1.462560e+000, 1.570899e+000, 2.166758e+000, 0.000000e+000)
+mad r10.xyz, r0.wwww, r11.xyzx, r10.xyzx
+add r11.xyz, -r10.xyzx, l(1.164042e+000, 2.259770e+000, 3.904699e+000, 0.000000e+000)
+mad r10.xyz, r3.zzzz, r11.xyzx, r10.xyzx
+add r11.xyz, -r10.xyzx, l(1.766009e+000, 2.676816e+000, 4.136159e+000, 0.000000e+000)
+mad r10.xyz, r3.wwww, r11.xyzx, r10.xyzx
+add r11.xyz, -r10.xyzx, l(1.259562e+000, 1.499783e+000, 2.380474e+000, 0.000000e+000)
+mad r10.xyz, r1.zzzz, r11.xyzx, r10.xyzx
+add r11.xyz, -r10.xyzx, l(6.909840e-001, 6.713280e-001, 9.283680e-001, 0.000000e+000)
+mad r10.xyz, r4.xxxx, r11.xyzx, r10.xyzx
+add r11.xyz, -r10.xyzx, l(-1.000000e-003, -1.000000e-003, -1.000000e-003, 0.000000e+000)
+mad r10.xyz, r4.yyyy, r11.xyzx, r10.xyzx
+add r11.xyz, -r10.xyzx, l(2.822400e-005, 3.572000e-005, 5.832000e-005, 0.000000e+000)
+mad r10.xyz, r4.zzzz, r11.xyzx, r10.xyzx
+mad r11.xyz, -r3.xxxx, l(-4.000000e-003, -4.000000e-003, -4.000000e-003, 0.000000e+000), l(1.707726e-001, 2.339834e-001, 3.456922e-001, 0.000000e+000)
+mad r2.xyz, r3.yyyy, r11.xyzx, r2.xxxx
+add r11.xyz, -r2.xyzx, l(1.578248e+000, 2.017377e+000, 2.552835e+000, 0.000000e+000)
+mad r2.xyz, r0.wwww, r11.xyzx, r2.xyzx
+add r11.xyz, -r2.xyzx, l(2.078025e+000, 2.902406e+000, 3.754751e+000, 0.000000e+000)
+mad r2.xyz, r3.zzzz, r11.xyzx, r2.xyzx
+add r11.xyz, -r2.xyzx, l(1.868802e+000, 2.880198e+000, 4.115045e+000, 0.000000e+000)
+mad r2.xyz, r3.wwww, r11.xyzx, r2.xyzx
+add r11.xyz, -r2.xyzx, l(1.389114e+000, 1.828183e+000, 2.535327e+000, 0.000000e+000)
+mad r2.xyz, r1.zzzz, r11.xyzx, r2.xyzx
+add r11.xyz, -r2.xyzx, l(4.829149e-001, 5.058322e-001, 7.248505e-001, 0.000000e+000)
+mad r2.xyz, r4.xxxx, r11.xyzx, r2.xyzx
+add r11.xyz, -r2.xyzx, l(-4.000000e-003, -4.000000e-003, -4.000000e-003, 0.000000e+000)
+mad r2.xyz, r4.yyyy, r11.xyzx, r2.xyzx
+mad r2.xyz, r4.zzzz, -r2.xyzx, r2.xyzx
+mul r11.x, l(1.000000e+004), cb5[63].y
+mov_sat r11.x, r11.x
+mad r5.w, r11.x, l(-2.000000e+000), l(3.000000e+000)
+mul r6.w, r11.x, r11.x
+mul r5.w, r5.w, r6.w
+mad r11.xyzw, cb5[63].yyyy, l(1.000000e+003, 1.000000e+003, 1.000000e+003, 1.000000e+003), l(-1.000000e-001, -2.000000e-001, -3.000000e-001, -4.000000e-001)
+mul_sat r11.xyzw, r11.xyzw, l(1.000000e+001, 9.999999e+000, 1.000000e+001, 1.000000e+001)
+mad r12.xyzw, r11.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r11.xyzw, r11.xyzw, r11.xyzw
+mul r11.xyzw, r11.xyzw, r12.xyzw
+mad r12.xyz, cb5[63].yyyy, l(1.000000e+003, 1.000000e+003, 1.000000e+003, 0.000000e+000), l(-5.000000e-001, -5.600000e-001, -7.400000e-001, 0.000000e+000)
+mul_sat r6.w, r12.x, l(9.999998e+000)
+mad r7.w, r6.w, l(-2.000000e+000), l(3.000000e+000)
+mul r6.w, r6.w, r6.w
+mul r6.w, r6.w, r7.w
+add r6.xyz, -r5.xyzx, r6.xyzx
+mad r5.xyz, r5.wwww, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, r7.xyzx
+mad r5.xyz, r11.xxxx, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, r8.xyzx
+mad r5.xyz, r11.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, r9.xyzx
+mad r5.xyz, r11.zzzz, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, r10.xyzx
+mad r5.xyz, r11.wwww, r6.xyzx, r5.xyzx
+add r2.xyz, r2.xyzx, -r5.xyzx
+mad o8.xyz, r6.wwww, r2.xyzx, r5.xyzx
+add r7.xyzw, r0.zzzz, l(-5.500000e+000, -1.990000e+001, -4.000000e+000, -5.000000e+000)
+mul_sat r8.xyzw, r7.xyzz, l(6.666667e-001, 5.263159e-001, 8.333335e-001, 1.111111e+000)
+mad r9.xyzw, r8.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r8.xyzw, r8.xyzw, r8.xyzw
+mul r8.xyzw, r8.xyzw, r9.xyzw
+mul r2.x, r8.x, l(3.520000e-001)
+mad o8.w, r8.y, -r2.x, r2.x
+mad r2.xyz, r3.xxxx, l(2.722900e-002, 1.221600e-002, 3.100000e-003, 0.000000e+000), l(7.710000e-004, 1.000000e-003, 1.900000e-003, 0.000000e+000)
+add r5.xyz, -r2.xyzx, l(3.423420e+000, 1.702800e+000, 8.518510e-001, 0.000000e+000)
+mad r2.xyz, r3.yyyy, r5.xyzx, r2.xyzx
+add r5.xyz, -r2.xyzx, l(1.459000e+001, 7.200000e+000, 3.400000e+000, 0.000000e+000)
+mad r2.xyz, r0.wwww, r5.xyzx, r2.xyzx
+add r5.xyz, -r2.xyzx, l(1.974100e+001, 1.823050e+001, 1.969350e+001, 0.000000e+000)
+mad r2.xyz, r3.zzzz, r5.xyzx, r2.xyzx
+add r5.xyz, -r2.xyzx, l(2.459160e+001, 2.067120e+001, 1.733000e+001, 0.000000e+000)
+mad r2.xyz, r3.wwww, r5.xyzx, r2.xyzx
+add r5.xyz, -r2.xyzx, l(2.700000e+001, 1.562000e+001, 7.500000e+000, 0.000000e+000)
+mad r2.xyz, r1.zzzz, r5.xyzx, r2.xyzx
+add r5.xyz, -r2.xyzx, l(2.100000e+001, 8.000000e+000, 2.520000e+000, 0.000000e+000)
+mad r2.xyz, r4.xxxx, r5.xyzx, r2.xyzx
+add r5.xyz, -r2.xyzx, l(7.980000e-002, 1.728000e-002, 6.300000e-003, 0.000000e+000)
+mad r2.xyz, r4.yyyy, r5.xyzx, r2.xyzx
+add r5.xyz, -r2.xyzx, l(7.710000e-004, 1.000000e-003, 1.900000e-003, 0.000000e+000)
+mad r2.xyz, r4.zzzz, r5.xyzx, r2.xyzx
+mad r5.xyz, r3.xxxx, l(1.224420e-002, 3.050000e-003, -6.039999e-004, 0.000000e+000), l(6.168000e-004, 1.000000e-003, 1.804000e-003, 0.000000e+000)
+add r6.xyz, -r5.xyzx, l(3.170000e+000, 1.600000e+000, 7.900000e-001, 0.000000e+000)
+mad r5.xyz, r3.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(9.047040e+000, 4.960000e+000, 2.356000e+000, 0.000000e+000)
+mad r5.xyz, r0.wwww, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(1.862000e+001, 1.852400e+001, 1.858000e+001, 0.000000e+000)
+mad r5.xyz, r3.zzzz, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(2.000000e+001, 1.750000e+001, 1.540000e+001, 0.000000e+000)
+mad r5.xyz, r3.wwww, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(2.577300e+001, 1.459700e+001, 8.000000e+000, 0.000000e+000)
+mad r5.xyz, r1.zzzz, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(1.600000e+001, 7.100000e+000, 4.000000e+000, 0.000000e+000)
+mad r5.xyz, r4.xxxx, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(1.058400e-001, 2.217600e-002, 1.159200e-002, 0.000000e+000)
+mad r5.xyz, r4.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(6.168000e-004, 1.000000e-003, 1.804000e-003, 0.000000e+000)
+mad r5.xyz, r4.zzzz, r6.xyzx, r5.xyzx
+mad r6.xyz, r3.xxxx, l(1.754280e-002, 3.825000e-003, -4.000000e-004, 0.000000e+000), l(4.626000e-004, 9.000000e-004, 1.800000e-003, 0.000000e+000)
+add r9.xyz, -r6.xyzx, l(3.180000e+000, 1.600000e+000, 7.900000e-001, 0.000000e+000)
+mad r6.xyz, r3.yyyy, r9.xyzx, r6.xyzx
+add r9.xyz, -r6.xyzx, l(1.083760e+001, 5.704000e+000, 3.220000e+000, 0.000000e+000)
+mad r6.xyz, r0.wwww, r9.xyzx, r6.xyzx
+add r9.xyz, -r6.xyzx, l(1.863000e+001, 1.852500e+001, 1.857300e+001, 0.000000e+000)
+mad r6.xyz, r3.zzzz, r9.xyzx, r6.xyzx
+add r9.xyz, -r6.xyzx, l(1.950000e+001, 1.750000e+001, 1.540000e+001, 0.000000e+000)
+mad r6.xyz, r3.wwww, r9.xyzx, r6.xyzx
+add r9.xyz, -r6.xyzx, l(2.254000e+001, 1.146600e+001, 6.860000e+000, 0.000000e+000)
+mad r6.xyz, r1.zzzz, r9.xyzx, r6.xyzx
+add r9.xyz, -r6.xyzx, l(1.990000e+001, 5.600000e+000, 3.900000e+000, 0.000000e+000)
+mad r6.xyz, r4.xxxx, r9.xyzx, r6.xyzx
+add r9.xyz, -r6.xyzx, l(1.185800e-001, 2.587200e-002, 2.702000e-002, 0.000000e+000)
+mad r6.xyz, r4.yyyy, r9.xyzx, r6.xyzx
+add r9.xyz, -r6.xyzx, l(4.626000e-004, 9.000000e-004, 1.800000e-003, 0.000000e+000)
+mad r6.xyz, r4.zzzz, r9.xyzx, r6.xyzx
+mad r9.xyz, r3.xxxx, l(1.772744e-002, 4.185000e-003, 1.999999e-004, 0.000000e+000), l(2.775600e-004, 5.400000e-004, 1.200000e-003, 0.000000e+000)
+add r10.xyz, -r9.xyzx, l(3.180000e+000, 1.600000e+000, 7.900000e-001, 0.000000e+000)
+mad r9.xyz, r3.yyyy, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(1.192136e+001, 6.710000e+000, 3.410000e+000, 0.000000e+000)
+mad r9.xyz, r0.wwww, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(1.825740e+001, 1.815450e+001, 1.820150e+001, 0.000000e+000)
+mad r9.xyz, r3.zzzz, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(1.812240e+001, 1.500320e+001, 1.146275e+001, 0.000000e+000)
+mad r9.xyz, r3.wwww, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(1.202824e+001, 6.894815e+000, 3.970700e+000, 0.000000e+000)
+mad r9.xyz, r1.zzzz, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(6.768000e+000, 2.538000e+000, 1.269000e+000, 0.000000e+000)
+mad r9.xyz, r4.xxxx, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(4.248000e-001, 9.000000e-002, 1.080000e-001, 0.000000e+000)
+mad r9.xyz, r4.yyyy, r10.xyzx, r9.xyzx
+add r10.xyz, -r9.xyzx, l(2.775600e-004, 5.400000e-004, 1.200000e-003, 0.000000e+000)
+mad r9.xyz, r4.zzzz, r10.xyzx, r9.xyzx
+mad r10.xyz, r3.xxxx, l(1.022475e-002, 2.085000e-003, -3.900001e-004, 0.000000e+000), l(5.782500e-004, 7.500000e-004, 1.230000e-003, 0.000000e+000)
+add r13.xyz, -r10.xyzx, l(7.254800e-001, 6.425340e-001, 6.000000e-001, 0.000000e+000)
+mad r10.xyz, r3.yyyy, r13.xyzx, r10.xyzx
+add r13.xyz, -r10.xyzx, l(3.837190e+000, 3.195488e+000, 2.905488e+000, 0.000000e+000)
+mad r10.xyz, r0.wwww, r13.xyzx, r10.xyzx
+add r13.xyz, -r10.xyzx, l(1.108485e+001, 1.102244e+001, 1.105094e+001, 0.000000e+000)
+mad r10.xyz, r3.zzzz, r13.xyzx, r10.xyzx
+add r13.xyz, -r10.xyzx, l(1.170000e+001, 1.050000e+001, 9.240000e+000, 0.000000e+000)
+mad r10.xyz, r3.wwww, r13.xyzx, r10.xyzx
+add r13.xyz, -r10.xyzx, l(1.528460e+001, 1.096460e+001, 7.364600e+000, 0.000000e+000)
+mad r10.xyz, r1.zzzz, r13.xyzx, r10.xyzx
+add r13.xyz, -r10.xyzx, l(7.877000e+000, 3.444000e+000, 2.380000e+000, 0.000000e+000)
+mad r10.xyz, r4.xxxx, r13.xyzx, r10.xyzx
+add r13.xyz, -r10.xyzx, l(4.743200e-002, 1.034880e-002, 1.080800e-002, 0.000000e+000)
+mad r10.xyz, r4.yyyy, r13.xyzx, r10.xyzx
+add r13.xyz, -r10.xyzx, l(5.782500e-004, 7.500000e-004, 1.230000e-003, 0.000000e+000)
+mad r10.xyz, r4.zzzz, r13.xyzx, r10.xyzx
+mad r13.xyz, r3.xxxx, l(6.957200e-003, 3.388000e-003, 8.484000e-004, 0.000000e+000), l(4.507000e-004, 5.000000e-004, 7.548000e-004, 0.000000e+000)
+add r14.xyz, -r13.xyzx, l(7.032020e-001, 6.067766e-001, 6.771916e-001, 0.000000e+000)
+mad r13.xyz, r3.yyyy, r14.xyzx, r13.xyzx
+add r14.xyz, -r13.xyzx, l(7.368641e+000, 6.347540e+000, 6.481100e+000, 0.000000e+000)
+mad r13.xyz, r0.wwww, r14.xyzx, r13.xyzx
+add r14.xyz, -r13.xyzx, l(7.801700e+000, 1.014300e+001, 1.298568e+001, 0.000000e+000)
+mad r13.xyz, r3.zzzz, r14.xyzx, r13.xyzx
+add r14.xyz, -r13.xyzx, l(9.092000e+000, 9.526800e+000, 1.151900e+001, 0.000000e+000)
+mad r13.xyz, r3.wwww, r14.xyzx, r13.xyzx
+add r14.xyz, -r13.xyzx, l(7.029294e+000, 7.350000e+000, 8.137000e+000, 0.000000e+000)
+mad r13.xyz, r1.zzzz, r14.xyzx, r13.xyzx
+add r14.xyz, -r13.xyzx, l(2.505600e+000, 1.998000e+000, 1.853280e+000, 0.000000e+000)
+mad r13.xyz, r4.xxxx, r14.xyzx, r13.xyzx
+add r14.xyz, -r13.xyzx, l(4.416930e-002, 1.704780e-002, 8.911350e-003, 0.000000e+000)
+mad r13.xyz, r4.yyyy, r14.xyzx, r13.xyzx
+add r14.xyz, -r13.xyzx, l(4.507000e-004, 5.000000e-004, 7.548000e-004, 0.000000e+000)
+mad r13.xyz, r4.zzzz, r14.xyzx, r13.xyzx
+mad r14.xyz, r3.xxxx, l(1.054820e-002, 4.977500e-003, 1.068900e-003, 0.000000e+000), l(8.600000e-004, 1.010000e-003, 1.400000e-003, 0.000000e+000)
+add r15.xyz, -r14.xyzx, l(8.895505e-001, 7.530000e-001, 7.110516e-001, 0.000000e+000)
+mad r14.xyz, r3.yyyy, r15.xyzx, r14.xyzx
+add r15.xyz, -r14.xyzx, l(5.305420e+000, 4.753038e+000, 4.666377e+000, 0.000000e+000)
+mad r14.xyz, r0.wwww, r15.xyzx, r14.xyzx
+add r15.xyz, -r14.xyzx, l(8.002444e+000, 7.850800e+000, 9.324679e+000, 0.000000e+000)
+mad r3.xyz, r3.zzzz, r15.xyzx, r14.xyzx
+add r14.xyz, -r3.xyzx, l(7.036841e+000, 7.583012e+000, 8.178860e+000, 0.000000e+000)
+mad r3.xyz, r3.wwww, r14.xyzx, r3.xyzx
+add r14.xyz, -r3.xyzx, l(5.906243e+000, 6.056400e+000, 6.570790e+000, 0.000000e+000)
+mad r3.xyz, r1.zzzz, r14.xyzx, r3.xyzx
+add r14.xyz, -r3.xyzx, l(1.958190e+000, 1.530429e+000, 1.614245e+000, 0.000000e+000)
+mad r3.xyz, r4.xxxx, r14.xyzx, r3.xyzx
+add r14.xyz, -r3.xyzx, l(9.134220e-002, 3.525500e-002, 1.842870e-002, 0.000000e+000)
+mad r3.xyz, r4.yyyy, r14.xyzx, r3.xyzx
+add r14.xyz, -r3.xyzx, l(8.600000e-004, 1.010000e-003, 1.400000e-003, 0.000000e+000)
+mad r3.xyz, r4.zzzz, r14.xyzx, r3.xyzx
+add r4.xyz, -r2.xyzx, r5.xyzx
+mad r2.xyz, r5.wwww, r4.xyzx, r2.xyzx
+add r4.xyz, -r2.xyzx, r6.xyzx
+mad r2.xyz, r11.xxxx, r4.xyzx, r2.xyzx
+add r4.xyz, -r2.xyzx, r9.xyzx
+mad r2.xyz, r11.yyyy, r4.xyzx, r2.xyzx
+add r4.xyz, -r2.xyzx, r10.xyzx
+mad r2.xyz, r11.zzzz, r4.xyzx, r2.xyzx
+add r4.xyz, -r2.xyzx, r13.xyzx
+mad r2.xyz, r11.wwww, r4.xyzx, r2.xyzx
+add r3.xyz, -r2.xyzx, r3.xyzx
+mad o9.xyz, r6.wwww, r3.xyzx, r2.xyzx
+mov_sat r7.xyzw, r7.wwzw
+mad r9.xyzw, r7.wwzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r7.xyzw, r7.xyzw, r7.xyzw
+mul r7.xyzw, r7.xyzw, r9.xyzw
+add r9.xyzw, r0.zzzz, l(-1.600000e+001, -1.700000e+001, -7.000000e+000, -1.000000e+001)
+mul_sat r2.xy, r9.zwzz, l(3.333333e-001, 5.000000e-001, 0.000000e+000, 0.000000e+000)
+mad r3.xy, r2.xyxx, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
+mul r2.xy, r2.xyxx, r2.xyxx
+mul r2.xy, r2.xyxx, r3.xyxx
+mul_sat r2.z, r2.w, l(2.500000e-001)
+mad r2.w, r2.z, l(-2.000000e+000), l(3.000000e+000)
+mul r2.z, r2.z, r2.z
+mul r2.z, r2.z, r2.w
+mov_sat r9.xyz, r9.xyzx
+mad r3.xyz, r9.xyzx, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 0.000000e+000)
+mul r4.xyz, r9.xyzx, r9.xyzx
+mul r3.xyz, r3.xyzx, r4.xyzx
+add r9.xyzw, r0.zzzz, l(-2.200000e+001, -4.100000e+000, -2.000000e+001, -2.100000e+001)
+mov_sat r4.xy, r9.zwzz
+mad r5.xy, r4.xyxx, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
+mul r4.xy, r4.xyxx, r4.xyxx
+mul r4.xy, r4.xyxx, r5.xyxx
+mul_sat r9.xyzw, r9.xyzw, l(5.000000e-001, 1.000001e+001, 9.090906e-001, 1.111112e+000)
+mad r10.xyzw, r9.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r9.xyzw, r9.xyzw, r9.xyzw
+mul r9.xyzw, r9.xyzw, r10.xyzw
+mad r10.xyzw, r7.zzzz, l(2.999997e-002, -4.600000e-002, -5.000007e-002, -9.000003e-002), l(1.650000e+000, 1.580000e+000, 1.570000e+000, 1.610000e+000)
+add r13.xyzw, -r10.xyzw, l(1.680000e+000, 1.570000e+000, 1.500000e+000, 1.500000e+000)
+mad r10.xyzw, r7.wwww, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.660000e+000, 1.570000e+000, 1.520000e+000, 1.520000e+000)
+mad r10.xyzw, r0.wwww, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.580000e+000, 1.540000e+000, 1.540000e+000)
+mad r10.xyzw, r2.xxxx, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.660000e+000, 1.580000e+000, 1.570000e+000, 1.570000e+000)
+mad r10.xyzw, r2.yyyy, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.570000e+000, 1.560000e+000, 1.560000e+000)
+mad r10.xyzw, r2.zzzz, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.570000e+000, 1.560000e+000, 1.560000e+000)
+mad r10.xyzw, r3.xxxx, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.600000e+000, 1.580000e+000, 1.580000e+000)
+mad r10.xyzw, r3.yyyy, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.610000e+000, 1.580000e+000, 1.580000e+000)
+mad r10.xyzw, r1.zzzz, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.590000e+000, 1.580000e+000, 1.580000e+000)
+mad r10.xyzw, r1.wwww, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.690000e+000, 1.600000e+000, 1.590000e+000, 1.590000e+000)
+mad r10.xyzw, r4.xxxx, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.690000e+000, 1.580000e+000, 1.570000e+000, 1.610000e+000)
+mad r10.xyzw, r4.yyyy, r13.xyzw, r10.xyzw
+add r13.xyzw, -r10.xyzw, l(1.650000e+000, 1.580000e+000, 1.570000e+000, 1.610000e+000)
+mad r2.w, r4.x, l(9.999990e-003), l(1.610000e+000)
+add r4.z, -r2.w, l(1.620000e+000)
+mad r2.w, r4.y, r4.z, r2.w
+add r4.z, -r2.w, l(1.610000e+000)
+mad r2.w, r9.x, r4.z, r2.w
+mad r10.xyzw, r9.xxxx, r13.xyzw, r10.xyzw
+mad r13.xyzw, r7.zzww, l(-3.999996e-002, -3.999996e-002, 2.200000e-001, -1.500000e-001), l(1.510000e+000, 1.540000e+000, 7.700000e-001, 8.000000e-001)
+add r14.xyzw, -r13.xyzw, l(1.470000e+000, 1.490000e+000, 9.900000e-001, 6.500000e-001)
+mad r5.xy, r7.wwww, r14.xyxx, r13.xyxx
+add r6.xy, -r5.xyxx, l(1.470000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r0.wwww, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.460000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r2.xxxx, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.460000e+000, 1.510000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r2.yyyy, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.460000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r2.zzzz, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.460000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r3.xxxx, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.470000e+000, 1.490000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r3.yyyy, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.470000e+000, 1.500000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r1.zzzz, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.470000e+000, 1.510000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r1.wwww, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.470000e+000, 1.510000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r4.xxxx, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.510000e+000, 1.550000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r4.yyyy, r6.xyxx, r5.xyxx
+add r6.xy, -r5.xyxx, l(1.510000e+000, 1.540000e+000, 0.000000e+000, 0.000000e+000)
+mad r5.xy, r9.xxxx, r6.xyxx, r5.xyxx
+add r2.w, r2.w, -r10.x
+mad r2.w, r5.w, r2.w, r10.x
+add r4.z, -r2.w, r10.y
+mad r2.w, r11.x, r4.z, r2.w
+add r4.z, -r2.w, r10.z
+mad r2.w, r11.y, r4.z, r2.w
+add r4.z, -r2.w, r10.w
+mad r2.w, r11.z, r4.z, r2.w
+add r4.z, -r2.w, r5.x
+mad r2.w, r11.w, r4.z, r2.w
+add r4.z, -r2.w, r5.y
+mad o9.w, r6.w, r4.z, r2.w
+add r5.xyz, cb3[53].xyzx, -cb3[54].xyzx
+mad r5.xyz, r9.yyyy, r5.xyzx, cb3[54].xyzx
+add r10.xyzw, r0.zzzz, l(-2.190000e+001, -5.200000e+000, -6.700000e+000, -2.110000e+001)
+mul_sat r15.xyzw, r10.xyzw, l(9.999962e+000, 6.666667e-001, 1.886792e-001, 1.098901e+000)
+mad r16.xyzw, r15.xyzw, l(-2.000000e+000, -2.000000e+000, -2.000000e+000, -2.000000e+000), l(3.000000e+000, 3.000000e+000, 3.000000e+000, 3.000000e+000)
+mul r15.xyzw, r15.xyzw, r15.xyzw
+mul r15.xyzw, r15.xyzw, r16.xyzw
+add r6.xyz, -r5.xyzx, cb3[54].xyzx
+mad r16.xyz, r15.xxxx, r6.xyzx, r5.xyzx
+add r5.xyz, r16.xyzx, cb1[15].xyzx
+mul r6.xyz, r5.yyyy, cb1[9].xywx
+mad r6.xyz, cb1[8].xywx, r5.xxxx, r6.xyzx
+mad r5.xyz, cb1[10].xywx, r5.zzzz, r6.xyzx
+add r5.xyz, r5.xyzx, cb1[11].xywx
+div r5.xy, r5.xyxx, r5.zzzz
+mad o10.xy, r5.xyxx, l(5.000000e-001, -5.000000e-001, 0.000000e+000, 0.000000e+000), l(5.000000e-001, 5.000000e-001, 0.000000e+000, 0.000000e+000)
+lt r2.w, l(1.290000e+000), cb5[86].w
+lt r4.z, cb5[63].y, l(6.100000e-004)
+and r2.w, r2.w, r4.z
+lt r4.z, cb5[86].x, l(1.327000e+000)
+and r2.w, r2.w, r4.z
+lt r4.z, l(-1.900000e+000), cb1[15].z
+and r2.w, r2.w, r4.z
+lt r4.z, l(9.600000e-001), cb2[13].w
+and r2.w, r2.w, r4.z
+and o10.z, r2.w, l(0x3f800000)
+max r16.w, r16.z, l(2.900000e-001)
+mul r2.w, r12.z, r12.y
+mul_sat r2.w, r2.w, l(-1.785710e+002)
+mad r2.w, r2.w, l(-1.100000e-002), l(2.100000e-002)
+add r4.z, -r2.w, l(5.100000e-002)
+mad r4.z, r8.z, r4.z, r2.w
+add r5.x, -r4.z, l(9.100000e-001)
+mad r4.z, r15.y, r5.x, r4.z
+add r5.x, -r4.z, l(9.100000e-001)
+mad r4.z, r15.z, r5.x, r4.z
+add r5.x, -r4.z, l(9.100000e-001)
+mad r4.z, r3.w, r5.x, r4.z
+add r5.x, -r4.z, l(9.100000e-001)
+mad r4.z, r4.w, r5.x, r4.z
+add r5.x, -r4.z, l(5.100000e-002)
+mad r4.z, r9.z, r5.x, r4.z
+add r2.w, r2.w, -r4.z
+mad r2.w, r15.w, r2.w, r4.z
+add r5.xyz, r16.xywx, cb1[15].xyzx
+mul r4.z, r5.y, cb1[9].w
+mad r4.z, cb1[8].w, r5.x, r4.z
+mad r4.z, cb1[10].w, r5.z, r4.z
+add r4.z, r4.z, cb1[11].w
+lt r4.z, r4.z, l(-1.000000e-001)
+movc r4.z, r4.z, l(-1.000000), l(1.000000)
+mul o11.w, r2.w, r4.z
+mad r12.xyzw, r5.wwww, l(0.000000e+000, -4.000000e+001, -4.000000e+001, 0.000000e+000), l(1.450000e+003, 7.000000e+002, 5.000000e+002, 9.000000e+002)
+add r15.xyzw, -r12.xyzw, l(1.200000e+003, 6.500000e+002, 3.800000e+002, 7.100000e+002)
+mad r12.xyzw, r11.xxxx, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.500000e+002, 3.300000e+002, 6.800000e+002)
+mad r12.xyzw, r11.yyyy, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.500000e+002, 4.000000e+002, 6.800000e+002)
+mad r12.xyzw, r11.zzzz, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.600000e+002, 2.700000e+002, 6.800000e+002)
+mad r12.xyzw, r11.wwww, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 6.600000e+002, 3.000000e+002, 6.800000e+002)
+mad o12.xyzw, r6.wwww, r15.xyzw, r12.xyzw
+mad r12.xyzw, r5.wwww, l(0.000000e+000, -4.000000e+001, 0.000000e+000, 4.777778e-003), l(9.400000e+002, 4.900000e+002, 3.400000e-001, 2.300000e-002)
+add r15.xyzw, -r12.xyzw, l(1.199000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
+mad r12.xyzw, r11.xxxx, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
+mad r12.xyzw, r11.yyyy, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
+mad r12.xyzw, r11.zzzz, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
+mad r12.xyzw, r11.wwww, r15.xyzw, r12.xyzw
+add r15.xyzw, -r12.xyzw, l(1.210000e+003, 4.100000e+002, 3.400000e-001, 2.777778e-002)
+mad r12.xyzw, r6.wwww, r15.xyzw, r12.xyzw
+add r5.xy, r0.zzzz, l(-5.800000e+000, -8.000000e+000, 0.000000e+000, 0.000000e+000)
+mul_sat r5.xy, r5.xyxx, l(5.000005e+000, 2.500000e-001, 0.000000e+000, 0.000000e+000)
+mad r6.xy, r5.xyxx, l(-2.000000e+000, -2.000000e+000, 0.000000e+000, 0.000000e+000), l(3.000000e+000, 3.000000e+000, 0.000000e+000, 0.000000e+000)
+mul r5.xy, r5.xyxx, r5.xyxx
+mul r5.xy, r5.xyxx, r6.xyxx
+mul_sat r2.w, r10.w, l(1.111112e+000)
+mad r4.z, r2.w, l(-2.000000e+000), l(3.000000e+000)
+mul r2.w, r2.w, r2.w
+mul r2.w, r2.w, r4.z
+mul r10.xyzw, r5.xxxx, l(1.400000e-001, 1.500000e-001, 1.200000e-002, 4.000000e-002)
+mad r15.xyzw, -r5.xxxx, l(1.400000e-001, 1.400000e-001, 1.500000e-001, 1.500000e-001), l(2.200000e+001, 1.500000e+001, 1.300000e+001, 1.600000e+001)
+mad r15.xyzw, r0.wwww, r15.xyzw, r10.xxyy
+add r17.xyzw, -r15.xyzw, l(3.500000e+001, 3.500000e+001, 3.500000e+001, 4.000000e+001)
+mad r15.xyzw, r3.zzzz, r17.xyzw, r15.xyzw
+add r17.xyzw, -r15.xyzw, l(1.900000e+001, 1.900000e+001, 1.900000e+001, 2.000000e+001)
+mad r15.xyzw, r5.yyyy, r17.xyzw, r15.xyzw
+add r17.xyzw, -r15.xyzw, l(4.400000e+001, 4.400000e+001, 4.400000e+001, 4.400000e+001)
+mad r15.xyzw, r3.wwww, r17.xyzw, r15.xyzw
+add r6.xyz, -r15.xywx, l(1.200000e+001, 3.000000e+000, 4.000000e+000, 0.000000e+000)
+mad r6.xyz, r4.wwww, r6.xyzx, r15.xywx
+mad r6.xyz, r9.zzzz, -r6.xyzx, r6.xyzx
+mad r4.z, r4.w, -r15.z, r15.z
+mad r4.z, r9.z, -r4.z, r4.z
+mad r4.z, r2.w, -r4.z, r4.z
+mad r6.xyz, r2.wwww, -r6.xyzx, r6.xyzx
+mad r8.xyz, -r5.xxxx, l(1.500000e-001, 1.200000e-002, 4.000000e-002, 0.000000e+000), l(1.200000e+001, 1.800000e+001, 1.900000e+001, 0.000000e+000)
+mad r8.xyz, r0.wwww, r8.xyzx, r10.yzwy
+add r10.xyz, -r8.xyzx, l(3.500000e+001, 3.800000e+001, 3.300000e+001, 0.000000e+000)
+mad r8.xyz, r3.zzzz, r10.xyzx, r8.xyzx
+add r10.xyz, -r8.xyzx, l(2.000000e+001, 5.700000e+001, 5.100000e+001, 0.000000e+000)
+mad r5.xyz, r5.yyyy, r10.xyzx, r8.xyzx
+add r8.xyz, -r5.xyzx, l(4.400000e+001, 4.400000e+001, 2.900000e+001, 0.000000e+000)
+mad r5.xyz, r3.wwww, r8.xyzx, r5.xyzx
+add r8.xyz, -r5.xyzx, l(4.000000e+000, 4.000000e+000, 2.300000e+000, 0.000000e+000)
+mad r5.xyz, r4.wwww, r8.xyzx, r5.xyzx
+mad r5.xyz, r9.zzzz, -r5.xyzx, r5.xyzx
+mad r5.xyz, r2.wwww, -r5.xyzx, r5.xyzx
+add r2.w, -r6.x, r6.y
+mad r2.w, r5.w, r2.w, r6.x
+add r3.z, -r2.w, r4.z
+mad r2.w, r11.x, r3.z, r2.w
+add r3.z, -r2.w, r6.z
+mad r2.w, r11.y, r3.z, r2.w
+add r3.z, -r2.w, r5.x
+mad r2.w, r11.z, r3.z, r2.w
+add r3.z, -r2.w, r5.y
+mad r2.w, r11.w, r3.z, r2.w
+add r3.z, -r2.w, r5.z
+mad o14.w, r6.w, r3.z, r2.w
+mad r5.xyz, r0.wwww, r14.zwzz, r13.zwzz
+add r6.xyz, -r5.zyzz, l(5.000000e-001, 6.000000e-001, 7.000000e-001, 0.000000e+000)
+mad r5.xyz, r2.xxxx, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(5.000000e-001, 6.000000e-001, 5.000000e-001, 0.000000e+000)
+mad r5.xyz, r2.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(5.000000e-001, 6.000000e-001, 5.000000e-001, 0.000000e+000)
+mad r5.xyz, r2.zzzz, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(5.000000e-001, 6.000000e-001, 5.000000e-001, 0.000000e+000)
+mad r5.xyz, r3.xxxx, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(6.000000e-001, 6.000000e-001, 7.000000e-001, 0.000000e+000)
+mad r5.xyz, r3.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(6.000000e-001, 7.000000e-001, 6.000000e-001, 0.000000e+000)
+mad r5.xyz, r1.zzzz, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(7.000000e-001, 7.500000e-001, 7.000000e-001, 0.000000e+000)
+mad r5.xyz, r1.wwww, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(7.700000e-001, 8.000000e-001, 7.700000e-001, 0.000000e+000)
+mad r5.xyz, r4.xxxx, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(7.700000e-001, 8.000000e-001, 7.700000e-001, 0.000000e+000)
+mad r5.xyz, r4.yyyy, r6.xyzx, r5.xyzx
+add r6.xyz, -r5.xyzx, l(7.700000e-001, 8.000000e-001, 7.700000e-001, 0.000000e+000)
+mad r2.w, r7.z, l(-4.999995e-002), l(7.700000e-001)
+add r3.z, -r2.w, l(8.400000e-001)
+mad r2.w, r7.w, r3.z, r2.w
+add r3.z, -r2.w, l(7.700000e-001)
+mad r2.w, r0.w, r3.z, r2.w
+add r3.z, -r2.w, l(7.100000e-001)
+mad r2.w, r2.x, r3.z, r2.w
+add r3.z, -r2.w, l(7.100000e-001)
+mad r2.w, r2.y, r3.z, r2.w
+add r3.z, -r2.w, l(7.100000e-001)
+mad r2.w, r2.z, r3.z, r2.w
+add r3.z, -r2.w, l(7.400000e-001)
+mad r2.w, r3.x, r3.z, r2.w
+add r3.z, -r2.w, l(7.700000e-001)
+mad r2.w, r3.y, r3.z, r2.w
+add r3.z, -r2.w, l(7.900000e-001)
+mad r2.w, r1.z, r3.z, r2.w
+add r3.z, -r2.w, l(7.700000e-001)
+mad r2.w, r1.w, r3.z, r2.w
+add r3.z, -r2.w, l(7.700000e-001)
+mad r2.w, r4.x, r3.z, r2.w
+add r3.z, -r2.w, l(7.700000e-001)
+mad r2.w, r4.y, r3.z, r2.w
+add r3.z, -r2.w, l(7.700000e-001)
+mad r2.w, r9.x, r3.z, r2.w
+mad r10.xyzw, r7.xyzw, l(2.800000e-001, -2.000004e-002, 1.700000e-001, 6.000000e+002), l(6.000000e-001, 9.200000e-001, 6.000000e-001, 4.000000e+003)
+add r13.xyzw, -r10.xyzw, l(7.700000e-001, 7.700000e-001, 7.700000e-001, 6.200000e+003)
+mad r8.xyz, r0.wwww, r13.xywx, r10.xywx
+add r10.xyw, -r8.xyxz, l(8.800000e-001, 8.500000e-001, 0.000000e+000, 6.700000e+003)
+mad r8.xyz, r2.xxxx, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(6.000000e-001, 7.200000e-001, 0.000000e+000, 7.800000e+003)
+mad r8.xyz, r2.yyyy, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(6.000000e-001, 9.000000e-001, 0.000000e+000, 7.700000e+003)
+mad r8.xyz, r2.zzzz, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(6.000000e-001, 9.000000e-001, 0.000000e+000, 7.700000e+003)
+mad r8.xyz, r3.xxxx, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(7.700000e-001, 9.000000e-001, 0.000000e+000, 7.700000e+003)
+mad r8.xyz, r3.yyyy, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(7.700000e-001, 9.000000e-001, 0.000000e+000, 5.400000e+003)
+mad r8.xyz, r1.zzzz, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(7.500000e-001, 8.500000e-001, 0.000000e+000, 6.000000e+003)
+mad r8.xyz, r1.wwww, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(9.000000e-001, 7.700000e-001, 0.000000e+000, 6.000000e+003)
+mad r8.xyz, r4.xxxx, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(5.000000e-001, 9.000000e-001, 0.000000e+000, 4.000000e+003)
+mad r8.xyz, r4.yyyy, r10.xywx, r8.xyzx
+add r10.xyw, -r8.xyxz, l(6.000000e-001, 9.200000e-001, 0.000000e+000, 4.000000e+003)
+mad r3.z, r7.w, r13.z, r10.z
+add r3.w, -r3.z, l(8.100000e-001)
+mad r3.z, r0.w, r3.w, r3.z
+add r3.w, -r3.z, l(7.200000e-001)
+mad r3.z, r2.x, r3.w, r3.z
+add r3.w, -r3.z, l(7.600000e-001)
+mad r3.z, r2.y, r3.w, r3.z
+add r3.w, -r3.z, l(7.600000e-001)
+mad r3.z, r2.z, r3.w, r3.z
+add r3.w, -r3.z, l(7.000000e-001)
+mad r3.z, r3.x, r3.w, r3.z
+add r3.w, -r3.z, l(7.000000e-001)
+mad r3.z, r3.y, r3.w, r3.z
+add r3.w, -r3.z, l(7.800000e-001)
+mad r3.z, r1.z, r3.w, r3.z
+add r3.w, -r3.z, l(7.700000e-001)
+mad r3.z, r1.w, r3.w, r3.z
+add r3.w, -r3.z, l(7.000000e-001)
+mad r3.z, r4.x, r3.w, r3.z
+add r3.w, -r3.z, l(6.000000e-001)
+mad r3.z, r4.y, r3.w, r3.z
+add r3.w, -r3.z, l(6.000000e-001)
+mad r13.x, r9.x, r3.w, r3.z
+mad r14.xyz, r9.xxxx, r6.xyzx, r5.xyzx
+mad r5.xyz, r9.xxxx, r10.xywx, r8.xyzx
+mad r3.zw, r7.zzzz, l(0.000000e+000, 0.000000e+000, -2.400000e+003, -2.600000e+003), l(0.000000e+000, 0.000000e+000, 7.900000e+003, 6.900000e+003)
+add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 6.800000e+003)
+mad r3.zw, r7.wwww, r4.zzzw, r3.zzzw
+add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.400000e+003)
+mad r3.zw, r0.wwww, r4.zzzw, r3.zzzw
+add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
+mad r3.zw, r2.xxxx, r4.zzzw, r3.zzzw
+add r4.zw, -r3.zzzw, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
+mad r2.xy, r2.yyyy, r4.zwzz, r3.zwzz
+add r3.zw, -r2.xxxy, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
+mad r2.xy, r2.zzzz, r3.zwzz, r2.xyxx
+add r3.zw, -r2.xxxy, l(0.000000e+000, 0.000000e+000, 6.900000e+003, 7.900000e+003)
+mad r2.xy, r3.xxxx, r3.zwzz, r2.xyxx
+add r3.xz, -r2.xxyx, l(6.900000e+003, 0.000000e+000, 7.900000e+003, 0.000000e+000)
+mad r2.xy, r3.yyyy, r3.xzxx, r2.xyxx
+add r3.xy, -r2.xyxx, l(6.900000e+003, 7.900000e+003, 0.000000e+000, 0.000000e+000)
+mad r2.xy, r1.zzzz, r3.xyxx, r2.xyxx
+add r3.xy, -r2.xyxx, l(6.900000e+003, 7.900000e+003, 0.000000e+000, 0.000000e+000)
+mad r1.zw, r1.wwww, r3.xxxy, r2.xxxy
+add r2.xy, -r1.zwzz, l(6.900000e+003, 7.800000e+003, 0.000000e+000, 0.000000e+000)
+mad r1.zw, r4.xxxx, r2.xxxy, r1.zzzw
+add r2.xy, -r1.zwzz, l(7.900000e+003, 6.900000e+003, 0.000000e+000, 0.000000e+000)
+mad r1.zw, r4.yyyy, r2.xxxy, r1.zzzw
+add r2.xy, -r1.zwzz, l(7.900000e+003, 6.900000e+003, 0.000000e+000, 0.000000e+000)
+mad r13.yz, r9.xxxx, r2.xxyx, r1.zzwz
+mov r14.w, l(7900.000000)
+add r1.zw, -r14.xxxw, r14.yyyw
+mad r1.zw, r5.wwww, r1.zzzw, r14.xxxw
+add r2.y, -r1.z, r2.w
+mov r2.z, l(0)
+mad r1.zw, r11.xxxx, r2.yyyz, r1.zzzw
+add r2.y, -r1.z, r5.x
+mov r2.z, l(0)
+mad r1.zw, r11.yyyy, r2.yyyz, r1.zzzw
+add r2.xy, -r1.zwzz, r5.yzyy
+mad r1.zw, r11.zzzz, r2.xxxy, r1.zzzw
+add r2.xy, -r1.zwzz, r13.xyxx
+mad r1.zw, r11.wwww, r2.xxxy, r1.zzzw
+mov r13.w, r14.z
+add r2.xy, -r1.zwzz, r13.wzww
+mad o14.yz, r6.wwww, r2.xxyx, r1.zzwz
+dp2 r0.w, r12.xyxx, l(2.200000e-001, 7.800000e-001, 0.000000e+000, 0.000000e+000)
+div r0.w, cb1[15].z, r0.w
+max r0.w, r0.w, l(2.100000e-001)
+min r0.w, r0.w, l(1.500000e+000)
+add r1.z, -r0.w, l(1.500000e+000)
+mad r1.z, r8.w, r1.z, r0.w
+add r0.w, r0.w, -r1.z
+mad r0.w, r9.w, r0.w, r1.z
+mad r1.z, r5.w, l(1.000000e-001), l(1.300000e+000)
+add r1.w, -r1.z, l(1.500000e+000)
+mad r1.z, r11.x, r1.w, r1.z
+add r1.w, -r1.z, l(1.500000e+000)
+mad r1.z, r11.y, r1.w, r1.z
+add r1.w, -r1.z, l(1.500000e+000)
+mad r1.z, r11.z, r1.w, r1.z
+add r1.w, -r1.z, l(1.960000e+000)
+mad r1.z, r11.w, r1.w, r1.z
+add r0.w, r0.w, -r1.z
+mad o15.x, r6.w, r0.w, r1.z
+mov o0.zw, l(0,0,0,1.000000)
+mov o1.z, r0.x
+mov r1.y, l(0)
+mov o6.xyzw, r1.yyyx
+mov o10.w, r0.z
+mov o11.xyz, r16.xywx
+mov o13.xyzw, r12.xyzw
+mov o14.x, l(0)
+mov o15.yzw, l(0,0,0,0)
+mov o2.x, r0.y
+ret
